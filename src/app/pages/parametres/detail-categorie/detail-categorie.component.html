@@ -1,0 +1,77 @@
+<div class="card-header text-white text-center bg-primary border-bottom-green">
+  Detail categorie :  {{categorie.libelle}}
+</div>
+
+
+<div class="modal-body">
+  <form [formGroup]="formCategorie">
+    <div class="row">
+      <div class="col-md-4 offset-2 form-check">
+        <input class="form-check-input" type="radio" name="typeCategorie" disabled id="categorie" formControlName="typeCategorie" [value]="1">
+        <label class="form-check-label" for="categorie">Catégorie</label>
+      </div>
+      <div class="col-md-6 form-check">
+        <input class="form-check-input" type="radio" name="typeCategorie" disabled id="souscategorie" [value]="2" formControlName="typeCategorie">
+        <label class="form-check-label" for="souscategorie">Sous-catégorie</label>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="libelle" class="col-form-label">Libellé</label>
+      <input class="form-control" type="text" name="libelle" formControlName="libelle" id="libelle" readonly>
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="col-form-label">Description</label>
+      <textarea class="form-control" name="description" formControlName="description" id="description" readonly></textarea>
+    </div>
+    <div class="mb-3" *ngIf="categorie.superCategorie" >
+    <label for="categId" class="col-form-label">Parent</label>
+      <select class="form-select form-select mb-3" aria-label=".form-select-lg example" name="parent" formControlName="categId" id="categId" disabled>
+        <option *ngFor="let item of listeCategories" [ngValue]="item.id">{{item.libelle}}</option>
+      </select>
+    </div>
+    <fieldset class="border p-2" *ngIf="listeSousCategories.length > 0">
+      <legend class="w-auto text-danger text-bold">Liste des sous categories</legend>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Libelle</th>
+            <th>Description</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of listeSousCategories; let i = index">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="ms-2">
+                  <h6 class="mb-0 font-14">{{i+1}}</h6>
+                </div>
+              </div>
+            </td>
+            <td>{{item.libelle}}</td>
+            <td>{{item.description}}</td>
+            <td>
+              <div class="d-flex order-actions">
+                <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-2" (click)="oenDetaiModal(item)"><i class='bx bx-show-alt'></i></button>
+                <button type="button" class="btn btn-outline-success btn-sm radius-30 px-2 ms-3" (click)="update(item)"><i class='bx bxs-edit'></i></button>
+                <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3" (click)="openConfirmdelete(item)"><i class='bx bxs-trash'></i></button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </fieldset>
+    <div class="form-group text-right">
+      <button type="button" class="btn btn-outline-danger radius-30" (click)="fermer()">
+        <i class='bx bx-x-circle mr-1'></i> Fermer
+      </button>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+
+</div>

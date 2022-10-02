@@ -1,0 +1,61 @@
+<div class="bg-login">
+	<!--wrapper-->
+	<div class="wrapper">
+		<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+			<div class="container-fluid">
+				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+					<div class="col mx-auto">
+						<div class="card">
+							<div class="card-body">
+								<div class="border p-4 rounded">
+
+                  <div class="text-center">
+                    <img [src]="'assets/images/logo.jpg'" class="img-fluid text-center w-50" width="800" alt="" />
+                    <h3 class="">LangTechApp</h3>
+                  </div>
+
+									<div class="form-body">
+										<form [formGroup]="formLogin" (ngSubmit)="onLogin()" class="row g-3">
+											<div class="col-12">
+												<label for="username" class="form-label">Nom d'utilisateur ou Email</label>
+												<input type="text" class="form-control" id="username" name="username" formControlName="username">
+											</div>
+
+											<div class="col-12">
+												<label for="password" class="form-label">Mot de passe</label>
+												<div class="input-group" id="show_hide_password">
+													<input [type]="enableShowPassword ? 'text' : 'password'" class="form-control border-end-0" id="password" name="password" formControlName="password">
+                          <a href="JavaScript:;" (click)="showPassword()" class="input-group-text bg-transparent">
+                            <i [class]="enableShowPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
+                          </a>
+												</div>
+											</div>
+
+											<div class="col-md-6">
+												<div class="form-check form-switch">
+													<input class="form-check-input" type="checkbox" name="rememberMe" formControlName="rememberMe" id="flexSwitchCheckChecked">
+													<label class="form-check-label" for="flexSwitchCheckChecked">Se souvenir de moi</label>
+												</div>
+											</div>
+											<div class="col-md-6 text-end">	<a href="JavaScript:;" (click)="onForgotpassword()">Mot de passe oublié ?</a>
+											</div>
+											<div class="col-12">
+												<div class="d-grid">
+													<button type="submit" [disabled]="formLogin.invalid" class="btn btn-primary">
+                            <i class="bx bxs-lock-open"></i>Se connecter
+                          </button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end row-->
+			</div>
+		</div>
+	</div>
+	<!--end wrapper-->
+</div>

@@ -1,0 +1,50 @@
+<div class="card-header text-white text-center bg-primary border-bottom-green">
+  Créer ou modifier une domaine
+</div>
+
+
+<div class="modal-body">
+  <form [formGroup]="formDomaine" (ngSubmit)="getDomaineInfos()">
+    <div class="mb-3">
+     <span>Voukez-vous creer un domaine ou sous-domaine ?</span>
+    </div>
+    <div class="row">
+      <div class="col-md-4 offset-2 form-check">
+        <input class="form-check-input" type="radio" name="typeDomaine" id="domaine" formControlName="typeDomaine" [value]="1" (change)="setValidator()">
+        <label class="form-check-label" for="domaine">Domaine</label>
+      </div>
+      <div class="col-md-6 form-check">
+        <input class="form-check-input" type="radio" name="typeDomaine" id="sousdomaine" [value]="2" formControlName="typeDomaine" (change)="setValidator()">
+        <label class="form-check-label" for="sousdomaine">Sous-domaine</label>
+      </div>
+    </div>
+    <div class="mb-3 form-group col-md-12">
+      <label for="libelle" class="col-form-label">Libellé</label>
+      <input class="form-control" type="text" name="libelle" formControlName="libelle" id="libelle">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="col-form-label">Description</label>
+      <textarea class="form-control" name="description" formControlName="description" id="description"></textarea>
+    </div>
+    <div class="mb-3" *ngIf="listeDomaines.length > 0 && formDomaine.value.typeDomaine == 2">
+      <label for="domaineId" class="col-form-label">Parent</label>
+      <select class="form-select form-select mb-3" aria-label=".form-select-lg example" name="parent" formControlName="domaineId" id="domaineId">
+        <option *ngFor="let item of listeDomaines" [ngValue]="item.id">{{item.libelle}}</option>
+      </select>
+    </div>
+
+    <div class="form-group text-right">
+      <button type="button" class="btn btn-outline-danger radius-30 mx-3" (click)="fermer()">
+        <i class='bx bx-x-circle mr-1'></i> Annuler
+      </button>
+
+      <button type="submit" class="btn btn-outline-success radius-30" [disabled]="formDomaine.invalid">
+        <i class='bx bx-check-square'></i> Valider
+      </button>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+
+</div>

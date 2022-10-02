@@ -1,0 +1,104 @@
+
+
+<div class="row">
+  <div class="col-lg-10 col-12 mx-auto">
+    <!--breadcrumb-->
+    <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+      <div class="breadcrumb-title pe-3">Utilisateurs</div>
+      <div class="ps-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0 p-0">
+            <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Créer un nouvel utilisateur
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!--end breadcrumb-->
+    <h6 class="mb-0">
+      Veuillez renseigner les informations suivantes (Les champs marqués (<span class="text-danger">*</span>) sont obligatoires)
+    </h6>
+    <hr/>
+  </div>
+  <div class="col-lg-10 col-12 mx-auto">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="formUser" (ngSubmit)="getUserInfos()">
+          <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+              <label for="nom" class="col-form-label">Nom <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" name="nom" formControlName="nom" id="nom">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="prenom" class="col-form-label">Prénom(s) <span class="text-danger">*</span></label>
+              <input class="form-control" type="text" name="prenom" formControlName="prenom" id="prenom">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="telephone" class="col-form-label">Téléphone</label>
+              <input class="form-control" type="tel" name="telephone" formControlName="telephone" id="telephone">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="email" class="col-form-label">Email <span class="text-danger">*</span></label>
+              <input class="form-control" type="email" name="email" formControlName="email" id="email">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="matricule" class="col-form-label">Matricule</label>
+              <input class="form-control" type="text" name="matricule" formControlName="matricule" id="matricule">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="fonction" class="col-form-label">Fonction</label>
+              <input class="form-control" type="text" name="fonction" formControlName="fonction" id="fonction">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="specialite" class="col-form-label">Spécialité</label>
+              <input class="form-control" type="text" name="specialite" formControlName="specialite" id="specialite">
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label class="col-form-label">Groupe <span class="text-danger">*</span></label>
+              <ng-multiselect-dropdown class="custom-font-size"
+                                       [placeholder]="'Sélectionner les groupes...'"
+                                       [settings]="dropdownSettings"
+                                       [data]="groupes"
+                                       formControlName="groupes">
+              </ng-multiselect-dropdown>
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label for="profilId" class="col-form-label">Profil <span class="text-danger">*</span></label>
+              <select class="form-control" name="profilId" formControlName="profilId" id="profilId">
+                <option selected disabled>--Sélectionner le profil--</option>
+                <option *ngFor="let p of profils" [ngValue]="p.id">{{ p.libelle }}</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-6 mb-3">
+              <label class="col-form-label">Photo de profil</label>
+              <input class="form-control" type="file"  accept="image/*"
+                     name="fonction" (change)="onPhotoChange($event)">
+            </div>
+
+            <div class="form-group text-right">
+              <button type="reset" class="btn btn-outline-danger radius-30 mx-3">
+                <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+              </button>
+
+              <button type="submit" class="btn btn-outline-success radius-30" [disabled]="formUser.invalid">
+                <i class='bx bx-check-square'></i> Enregistrer
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Utilisateurs</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Liste des utilisateurs</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="row align-items-center">
+          <div class="col-lg-6 col-xl-6">
+            <a routerLink="/pages/users/create-update-user/null" class="btn btn-primary mb-3 mb-lg-0 radius-30">
+              <i class='bx bx-user-plus'></i>Créer un nouvel utilisateur
+            </a>
+          </div>
+
+          <div class="col-lg-6 col-xl-6">
+            <form class="float-lg-end">
+              <div class="row row-cols-lg-auto g-2">
+                <div class="col-12">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-white text-primary" (click)="onChangeFilterStatus()">
+                      {{ enableShowFilter ? 'Fermer le filtre' : 'Filtrer la liste' }}
+                    </button>
+                    <div class="btn-group" (click)="onChangeFilterStatus()">
+                      <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1">
+                        <i [class]="enableShowFilter ? 'lni lni-close text-danger' : 'bx bx-slider'"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <hr *ngIf="enableShowFilter"/>
+
+        <div class="row align-items-center" *ngIf="enableShowFilter">
+          <form [formGroup]="formSearch" (ngSubmit)="onSearchUser()">
+            <div class="row">
+              <div class="col-12 col-md-3 mb-3">
+                <label for="nom" class="col-form-label">Nom</label>
+                <input class="form-control" type="text" name="nom" formControlName="nom" id="nom">
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="prenom" class="col-form-label">Prénom(s)</label>
+                <input class="form-control" type="text" name="prenom" formControlName="prenom" id="prenom">
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="email" class="col-form-label">Email</label>
+                <input class="form-control" type="email" name="email" formControlName="email" id="email">
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="fonction" class="col-form-label">Fonction</label>
+                <input class="form-control" type="text" name="fonction" formControlName="fonction" id="fonction">
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="specialite" class="col-form-label">Spécialité</label>
+                <input class="form-control" type="text" name="specialite" formControlName="specialite" id="specialite">
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="profilId" class="col-form-label">Profil</label>
+                <select class="form-control" name="profilId" formControlName="profilId" id="profilId">
+                  <option selected disabled>--Sélectionner le profil--</option>
+                  <option *ngFor="let p of profils" [ngValue]="p.id">{{ p.libelle }}</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="groupeId" class="col-form-label">Groupe</label>
+                <select class="form-control" name="groupeId" formControlName="groupeId" id="groupeId">
+                  <option selected disabled>--Sélectionner le groupe--</option>
+                  <option *ngFor="let g of groupes" [ngValue]="g.id">{{ g.libelle }}</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-3 mb-3">
+                <label for="statut" class="col-form-label">Statut</label>
+                <select class="form-control" name="statut" formControlName="statut" id="statut">
+                  <option selected disabled>--Sélectionner le statut--</option>
+                  <option [ngValue]="true">Activé</option>
+                  <option [ngValue]="false">Desactivé</option>
+                </select>
+              </div>
+
+              <div class="form-group text-center">
+                <button type="reset" class="btn btn-outline-danger radius-30 mx-3">
+                  <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+                </button>
+
+                <button type="submit" class="btn btn-outline-success radius-30">
+                  <i class='bx bx-search'></i> Rechercher
+                </button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12" *ngIf="users.length === 0">
+    <div class="card">
+      <div class="card-body">
+        <h6>
+          Aucun utilisateur enregistré.
+          Vous pouvez ajouter de nouveaux profils en cliquant sur le bouton Ajouter ci-dessus !
+        </h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4" *ngIf="users.length !== 0">
+  <div class="col" *ngFor="let u of users">
+    <div class="card radius-15">
+      <div class="card-body text-center">
+        <div class="p-4 border radius-15">
+          <img src="{{ u.photo === null ? 'assets/images/avatars/avatar.png' : 'data:' + u.photoContentType + ';base64,' + u.photo }}" width="110" height="110" class="rounded-circle shadow bg-white" alt="">
+          <h6 class="mb-0 mt-5">{{ u.prenom + ' ' + u.nom.toUpperCase() }}</h6>
+          <p class="mb-3">{{ u.fonction }}</p>
+          <div class="list-inline contacts-social mt-3 mb-2">
+            <a [href]="u.facebook" target="_blank"
+               class="list-inline-item bg-facebook text-white border-0" *ngIf="u.facebook">
+              <i class="bx bxl-facebook"></i>
+            </a>
+
+            <a [href]="u.twitter" target="_blank" *ngIf="u.twitter"
+               class="list-inline-item bg-twitter text-white border-0">
+              <i class="bx bxl-twitter"></i>
+            </a>
+
+            <a [href]="'mailto:' + u.email" target="_blank" *ngIf="u.email"
+               class="list-inline-item bg-google text-white border-0">
+              <i class="bx bxl-google"></i>
+            </a>
+
+            <a [href]="u.linkedIn" target="_blank" *ngIf="u.linkedIn"
+               class="list-inline-item bg-linkedin text-white border-0">
+              <i class="bx bxl-linkedin"></i>
+            </a>
+          </div>
+          <div class="d-grid">
+            <a href="JavaScript:;" class="btn {{ u.statut ? 'btn-outline-success' : 'btn-outline-danger' }} radius-15 mb-2">
+              {{ u.statut ? 'Activé' : 'Desactivé' }}
+            </a>
+
+            <a routerLink="/pages/users/detail-user/{{ u.id }}" class="btn btn-outline-primary radius-15">
+              <i class="bx bx-show"></i> Voir plus
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end row-->

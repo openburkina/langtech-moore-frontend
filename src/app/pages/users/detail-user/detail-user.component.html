@@ -1,0 +1,183 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Utilisateurs</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Détail des informations d'un utilisateur</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="ms-auto">
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary">Actions</button>
+      <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span class="visually-hidden">Toggle Dropdown</span>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+        <a class="dropdown-item" href="JavaScript:;" (click)="onUpdateUser()">
+          <i class='bx bxs-edit'></i> Modifier les informations
+        </a>
+
+        <a class="dropdown-item" href="JavaScript:;" (click)="resetPassword()">
+          <i class='bx bx-reset'></i> Réinitialiser le mot de passe de l'utilisateur
+        </a>
+
+        <a class="dropdown-item" href="JavaScript:;" (click)="onEnableOrDisableUser()">
+          <i class='bx bxs-edit'></i> {{ !user.statut ? 'Activer' : 'Desactiver' }} le compte de l'utilisateur
+        </a>
+
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="JavaScript:;" (click)="goBack()">
+          <i class="bx bx-arrow-back"></i> Retour à la liste des utilisateurs
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end breadcrumb-->
+
+
+<div class="container">
+  <div class="main-body">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex flex-column align-items-center text-center">
+              <img src="{{ user.photo === null ? 'assets/images/avatars/avatar.png' : 'data:' + user.photoContentType + ';base64,' + user.photo }}"
+                   alt="Admin" class="rounded-circle p-1 bg-primary" width="300">
+            </div>
+
+            <hr/>
+
+            <div class="d-flex flex-column align-items-center text-center row my-3">
+              <button type="button" (click)="onUpdateUser()" class="btn btn-outline-primary radius-30 col-10 offset-1 my-2">
+                <i class='bx bxs-edit'></i> Modifier les informations
+              </button>
+
+              <button type="button" (click)="resetPassword()" class="btn btn-outline-primary radius-30 col-10 offset-1 my-2">
+                <i class='bx bx-reset'></i> Réinitialiser le mot de passe de l'utilisateur
+              </button>
+
+              <button type="button" (click)="onEnableOrDisableUser()" class="btn {{ !user.statut ? 'btn-outline-success' : 'btn-outline-danger' }} radius-30  col-10 offset-1 my-2">
+                <i class='bx bxs-edit'></i> {{ !user.statut ? 'Activer' : 'Desactiver' }} le compte de l'utilisateur
+              </button>
+
+              <button type="button" (click)="onDeleteUser()" class="btn btn-outline-danger radius-30 col-10 offset-1 my-2">
+                <i class="bx bxs-trash"></i> Supprimer le compte de l'utilisateur
+              </button>
+
+              <button class="btn btn-outline-danger radius-30 col-10 offset-1 my-2" (click)="goBack()">
+                <i class="bx bx-arrow-back"></i> Retour à la liste des utilisateurs
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="d-flex align-items-center mb-3">Informations personnelles</h5>
+            <hr/>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Nom
+                </h6>
+                <span class="text-secondary">{{ user?.nom }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Prénom(s)
+                </h6>
+                <span class="text-secondary">{{ user?.prenom }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Email
+                </h6>
+                <span class="text-secondary">{{ user?.email }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Téléphone
+                </h6>
+                <span class="text-secondary">{{ user?.telephone }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Fonction
+                </h6>
+                <span class="text-secondary">{{ user?.fonction }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Spécialité
+                </h6>
+                <span class="text-secondary">{{ user?.specialite }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Matricule
+                </h6>
+                <span class="text-secondary">{{ user?.matricule }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Profil
+                </h6>
+                <span class="text-secondary">{{ user?.profil?.libelle }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Facebook
+                </h6>
+                <span class="text-secondary">{{ user?.facebook }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  Twitter
+                </h6>
+                <span class="text-secondary">{{ user?.twitter }}</span>
+              </li>
+
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  LinkedIn
+                </h6>
+                <span class="text-secondary">{{ user?.linkedIn }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="d-flex align-items-center mb-3">Groupes</h5>
+            <hr/>
+            <ul class="list-group list-group-flush" *ngFor="let g of user.groupes">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <h6 class="mb-0">
+                  {{ g.libelle }}
+                </h6>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

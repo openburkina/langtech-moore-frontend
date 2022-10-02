@@ -1,0 +1,68 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Profils</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Liste des profils</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-lg-flex align-items-center mb-4 gap-3">
+      <div class="position-relative" *ngIf="profils.length === 0">
+        <h6>
+          Aucun profil enregistré.
+          Veuillez cliquer sur le bouton suivant
+          <i class="lni lni-arrow-right"></i>
+        </h6>
+      </div>
+
+      <div class="ms-auto">
+        <button type="button" class="btn btn-primary radius-30 px-3" (click)="openCreateUpdateModal(null)">
+          <i class='bx bxs-plus-square mr-1'></i> Ajouter un nouveau profil
+        </button>
+      </div>
+    </div>
+    <div class="table-responsive" *ngIf="profils.length !== 0">
+      <table class="table mb-0">
+        <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Libellé</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let p of profils; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ p.libelle }}</td>
+          <td>{{ p.description }}</td>
+          <td>
+            <div class="d-flex order-actions">
+              <button type="button" (click)="openDetailModal(p)" class="btn btn-outline-primary radius-30 btn-sm mx-2">
+                <i class='bx bx-show'></i>
+              </button>
+
+              <button type="button" (click)="openCreateUpdateModal(p)" class="btn btn-outline-success radius-30 btn-sm">
+                <i class='bx bxs-edit'></i>
+              </button>
+
+              <button type="button" (click)="openConfirmModal(p)" class="btn btn-outline-danger radius-30 btn-sm mx-2">
+                <i class='bx bxs-trash'></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
