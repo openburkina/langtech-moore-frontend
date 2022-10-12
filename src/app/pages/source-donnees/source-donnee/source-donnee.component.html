@@ -1,0 +1,63 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Source de données</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Consultation</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-lg-flex align-items-center mb-4 gap-3">
+      <div class="position-relative alert alert-warning" *ngIf="listeCategories.length == 0">
+        <h6>
+          Aucune catégorie enregistrée.
+          Vous pouvez ajouter de nouvelles sources de données en cliquant sur le bouton suivant
+          <i class="lni lni-angle-double-right"></i>
+          <i class="lni lni-angle-double-right"></i>
+          <i class="lni lni-angle-double-right"></i>
+        </h6>
+      </div>
+      <div class="ms-auto"><button (click)="openModalCreate()" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Ajouter source</button></div>
+    </div>
+    <div class="table-responsive" *ngIf="listeCategories.length > 0">
+      <table class="table mb-0">
+        <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Libelle</th>
+          <th>Categorie</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of listeCategories; let i = index">
+          <td>
+            <div class="d-flex align-items-center">
+              <div class="ms-2">
+                <h6 class="mb-0 font-14">{{i+1}}</h6>
+              </div>
+            </div>
+          </td>
+          <td>{{item.libelle}}</td>
+          <td>{{item.description}}</td>
+          <td>
+            <div class="d-flex order-actions">
+              <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-2" (click)="openModalDetail(item)"><i class='bx bx-show-alt'></i></button>
+              <button type="button" class="btn btn-outline-success btn-sm radius-30 px-2 ms-3" (click)="update(item)"><i class='bx bxs-edit'></i></button>
+              <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3" (click)="openConfirmdelete(item)"><i class='bx bxs-trash'></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
