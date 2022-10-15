@@ -25,7 +25,7 @@ export class CreateUpdateSourceDonneeComponent implements OnInit {
   getSourceInfo() {
     console.warn("fichier",this.sourceDonnee.file);
     this.sourceService.createSourceDonnee(this.sourceDonnee.file).subscribe(data=>{
-      if(data.body){
+      if(data){
         console.warn("cool")
       }
     })

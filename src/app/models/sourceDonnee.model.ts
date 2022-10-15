@@ -1,10 +1,8 @@
-export class Categorie {
+export class SourceDonnee {
   constructor(
     public id?: number,
+    public file?: any,
     public libelle?: string,
-    public description?: string,
-    public superCategorie?: Categorie,
-    public categId?: number,
   ) {
   }
 }

@@ -126,5 +126,12 @@ export const Full_ROUTES: Routes = [
       m => m.GroupesModule,
     ),
     canActivate: [UserRoutesAccessGuard],
+  },
+  {
+    path: 'source-donnees',
+    loadChildren: () => import('../../source-donnees/source-donnees.module').then(
+      m => m.SourceDonneesModule,
+    ),
+    canActivate: [UserRoutesAccessGuard],
   }
 ];

@@ -10,7 +10,7 @@ export const ROUTES: RouteInfo[] = [
     class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
   },
   {
-    path: '/pages/me-uploads',
+    path: '/pages/source-donnees',
     title: 'Sources de données',
     icon: 'bx bx-data', class: '', badge: '', badgeClass: '',
     isExternalLink: false,
