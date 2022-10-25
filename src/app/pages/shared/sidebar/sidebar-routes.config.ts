@@ -17,7 +17,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
     authorities: ['ROLE_USER']
   },
-  {
+  /*{
     path: '/pages/me-demandes',
     title: 'Traductions',
     icon: 'bx bx-play-circle',
@@ -25,7 +25,7 @@ export const ROUTES: RouteInfo[] = [
     isExternalLink: false,
     submenu: [],
     authorities: ['ROLE_USER']
-  },
+  },*/
   {
     path: '/pages/me-demandes',
     title: 'Contributeurs',
