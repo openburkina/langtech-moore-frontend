@@ -54,6 +54,7 @@ export class AuthJwtService {
     return this.http
       .post<JwtToken>('/api/authenticate', credentials)
       .pipe(map((response: JwtToken) => {
+        console.log(response);
           this.authenticateSuccess(response, credentials.rememberMe);
         }),
       );
