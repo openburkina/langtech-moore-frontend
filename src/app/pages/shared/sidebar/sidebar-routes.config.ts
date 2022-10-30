@@ -27,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
     authorities: ['ROLE_USER']
   },
   {
-    path: '/pages/me-demandes',
+    path: '/pages/contributeus',
     title: 'Contributeurs',
     icon: 'lni lni-users',
     class: '', badge: '', badgeClass: '',
@@ -48,7 +48,7 @@ export const ROUTES: RouteInfo[] = [
       },
     ], authorities: ['ROLE_USER', 'ROLE_ADMIN']
   },
-  {
+  /*{
     path: '', title: '', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
   },
   {
@@ -189,5 +189,5 @@ export const ROUTES: RouteInfo[] = [
       { path: 'https://codervent.com/rocker-angular/demo/vertical/docs/', title: 'Documentation', icon: 'bx bx-folder', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] },
       { path: 'https://themeforest.net/user/codewrrap/portfolio', title: 'Support', icon: 'bx bx-support', class: '', badge: '', badgeClass: '', isExternalLink: true, submenu: [] }
     ], authorities: []
-  },
+  },*/
 ];

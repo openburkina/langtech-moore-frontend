@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserService} from "../user.service";
 import {ProfilService} from "../../profils/profil.service";
-import {GroupeService} from "../../groupes/groupe.service";
 import {Groupe} from "../../../models/groupe.model";
 import {Profil} from "../../../models/profil.model";
 import {NotificationService} from "../../../common/services/notification.service";
@@ -49,7 +48,6 @@ export class CreateUpdateUserComponent implements OnInit {
     private fb: FormBuilder,
     private userSerice: UserService,
     private profilService: ProfilService,
-    private groupeService: GroupeService,
     private notification: NotificationService,
     private activeRoute: ActivatedRoute,
     private _location: Location,
@@ -58,27 +56,9 @@ export class CreateUpdateUserComponent implements OnInit {
   ngOnInit(): void {
     this.utilisateur = new Utilisateur();
     this.utilisateur.id = Number(this.activeRoute.snapshot.params.userId);
-    this.getGroupes();
   }
 
-  getGroupes() {
-    const result = this.groupeService.getGroupes().subscribe(
-      response => {
-        if (response.body === null || response.body.length === 0) {
-          this.notification.open('warning', 'Aucun groupe trouvé !');
-        } else {
-          this.groupes = response.body;
-        }
-        result.unsubscribe();
-        this.getProfils();
-      },
-      error => {
-        result.unsubscribe();
-        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des groupes !`;
-        this.notification.open('danger', message);
-      }
-    );
-  }
+
 
   getProfils() {
     const result = this.profilService.getProfils().subscribe(
@@ -127,28 +107,18 @@ export class CreateUpdateUserComponent implements OnInit {
     this.formUser.patchValue({
       nom: this.utilisateur.nom,
       prenom: this.utilisateur.prenom,
-      fonction: this.utilisateur.fonction,
       email: this.utilisateur.email,
-      specialite: this.utilisateur.specialite,
-      matricule: this.utilisateur.matricule,
       telephone: this.utilisateur.telephone,
       profilId: this.utilisateur.profil.id,
-      groupes: this.utilisateur.groupes,
     });
   }
 
   getUserInfos() {
     this.utilisateur.nom = this.formUser.get('nom').value;
     this.utilisateur.prenom = this.formUser.get('prenom').value;
-    this.utilisateur.fonction = this.formUser.get('fonction').value;
-    this.utilisateur.specialite = this.formUser.get('specialite').value;
-    this.utilisateur.matricule = this.formUser.get('matricule').value;
     this.utilisateur.telephone = this.formUser.get('telephone').value;
-    this.utilisateur.profilId = this.formUser.get('profilId').value;
-    this.utilisateur.groupes = this.formUser.get('groupes').value;
     this.utilisateur.email = this.formUser.get('email').value;
     this.utilisateur.email = this.utilisateur.email.toLowerCase();
-    this.utilisateur.profil.id =  this.utilisateur.profilId;
     this.saveUser();
   }
 
@@ -207,13 +177,5 @@ export class CreateUpdateUserComponent implements OnInit {
   }
 
   onPhotoChange(event: any) {
-    const reader = new FileReader();
-    this.utilisateur.photoContentType = event.target.files[0].type;
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => {
-      const image: any = reader.result;
-      const photoData: string[] = image.split('base64,');
-      this.utilisateur.photo = photoData[1];
-    };
   }
 }

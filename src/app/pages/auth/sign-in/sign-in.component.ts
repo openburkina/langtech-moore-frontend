@@ -6,6 +6,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {LoginService} from "../services/login.service";
 import {NotificationService} from "../../../common/services/notification.service";
 import {Location, LocationStrategy, PlatformLocation} from "@angular/common";
+import {ParameterService} from "../../../common/services/parameter.service";
 
 
 @Component({
@@ -33,6 +34,7 @@ export class SignInComponent implements OnInit {
     private _location: Location,
     private locationStrategy: LocationStrategy,
     private location: PlatformLocation,
+    private parameter: ParameterService,
   ) { }
 
   ngOnInit(): void {

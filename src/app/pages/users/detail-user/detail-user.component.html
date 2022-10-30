@@ -46,13 +46,6 @@
       <div class="col-12 col-md-6">
         <div class="card">
           <div class="card-body">
-            <div class="d-flex flex-column align-items-center text-center">
-              <img src="{{ user.photo === null ? 'assets/images/avatars/avatar.png' : 'data:' + user.photoContentType + ';base64,' + user.photo }}"
-                   alt="Admin" class="rounded-circle p-1 bg-primary" width="300">
-            </div>
-
-            <hr/>
-
             <div class="d-flex flex-column align-items-center text-center row my-3">
               <button type="button" (click)="onUpdateUser()" class="btn btn-outline-primary radius-30 col-10 offset-1 my-2">
                 <i class='bx bxs-edit'></i> Modifier les informations
@@ -114,69 +107,14 @@
 
               <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                 <h6 class="mb-0">
-                  Fonction
-                </h6>
-                <span class="text-secondary">{{ user?.fonction }}</span>
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
-                  Spécialité
-                </h6>
-                <span class="text-secondary">{{ user?.specialite }}</span>
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
-                  Matricule
-                </h6>
-                <span class="text-secondary">{{ user?.matricule }}</span>
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
                   Profil
                 </h6>
                 <span class="text-secondary">{{ user?.profil?.libelle }}</span>
               </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
-                  Facebook
-                </h6>
-                <span class="text-secondary">{{ user?.facebook }}</span>
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
-                  Twitter
-                </h6>
-                <span class="text-secondary">{{ user?.twitter }}</span>
-              </li>
-
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
-                  LinkedIn
-                </h6>
-                <span class="text-secondary">{{ user?.linkedIn }}</span>
-              </li>
             </ul>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-body">
-            <h5 class="d-flex align-items-center mb-3">Groupes</h5>
-            <hr/>
-            <ul class="list-group list-group-flush" *ngFor="let g of user.groupes">
-              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                <h6 class="mb-0">
-                  {{ g.libelle }}
-                </h6>
-              </li>
-            </ul>
-          </div>
-        </div>
       </div>
     </div>
   </div>
