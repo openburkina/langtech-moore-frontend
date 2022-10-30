@@ -17,15 +17,15 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
     authorities: ['ROLE_USER']
   },
-  /*{
-    path: '/pages/me-demandes',
-    title: 'Traductions',
-    icon: 'bx bx-play-circle',
+  {
+    path: '/pages/contributions',
+    title: 'Contributions',
+    icon: 'lni lni-mic',
     class: '', badge: '', badgeClass: '',
     isExternalLink: false,
     submenu: [],
     authorities: ['ROLE_USER']
-  },*/
+  },
   {
     path: '/pages/me-demandes',
     title: 'Contributeurs',
@@ -45,15 +45,6 @@ export const ROUTES: RouteInfo[] = [
       },
       {
         path: '/pages/profils', title: 'Liste des Profils', icon: 'lni lni-unlink', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
-      },
-    ], authorities: ['ROLE_USER', 'ROLE_ADMIN']
-  },
-  {
-    path: '', title: 'Paramètres', icon: 'bx bx-cog', class: 'sub',
-    badge: '', badgeClass: '', isExternalLink: false,
-    submenu: [
-      {
-        path: '/pages/parametres/categories', title: 'Catégories', icon: 'bx bx-category', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
       },
     ], authorities: ['ROLE_USER', 'ROLE_ADMIN']
   },

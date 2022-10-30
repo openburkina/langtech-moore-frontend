@@ -133,5 +133,12 @@ export const Full_ROUTES: Routes = [
       m => m.SourceDonneesModule,
     ),
     canActivate: [UserRoutesAccessGuard],
+  },
+  {
+    path: 'contributions',
+    loadChildren: () => import('../../contributions/contributions.module').then(
+      m => m.ContributionsModule,
+    ),
+    canActivate: [UserRoutesAccessGuard],
   }
 ];
