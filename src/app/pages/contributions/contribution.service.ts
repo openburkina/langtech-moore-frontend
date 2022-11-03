@@ -3,6 +3,7 @@ import {HttpClient, HttpResponse} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Langue} from "../../models/langue.model";
 import {Traduction} from "../../models/traduction.model";
+import {tap} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,13 @@ export class ContributionService {
         }
       }
     });
+  }
+
+  public delete(traductionId: number): Observable<HttpResponse<void>> {
+    return this.http.delete<void>(`/api/traductions/${traductionId}`, { observe: "response"}).pipe(
+      tap(
+        () => this.getTraductions(),
+      )
+    )
   }
 }

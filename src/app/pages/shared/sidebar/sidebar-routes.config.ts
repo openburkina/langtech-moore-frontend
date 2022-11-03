@@ -15,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     icon: 'bx bx-data', class: '', badge: '', badgeClass: '',
     isExternalLink: false,
     submenu: [],
-    authorities: ['ROLE_USER']
+    authorities: ['ROLE_USER', 'ROLE_ADMIN']
   },
   {
     path: '/pages/contributions',

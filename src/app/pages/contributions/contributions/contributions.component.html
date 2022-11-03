@@ -40,15 +40,15 @@
           <td>{{ t.libelle }}</td>
           <td>{{ t.type }}</td>
           <td>
-            <button *ngIf="t.etat === 'EN_ATTENTE'" type="button" class="btn btn-outline-warning btn-sm px-2">
+            <button *ngIf="t.etat === 'EN_ATTENTE'" type="button" class="btn btn-outline-warning btn-sm">
               {{ t.etat }}
             </button>
 
-            <button *ngIf="t.etat === 'VALIDER'" type="button" class="btn btn-outline-success btn-sm px-2">
+            <button *ngIf="t.etat === 'VALIDER'" type="button" class="btn btn-outline-success btn-sm">
               {{ t.etat }}
             </button>
 
-            <button *ngIf="t.etat === 'REJETER'" type="button" class="btn btn-outline-danger btn-sm px-2">
+            <button *ngIf="t.etat === 'REJETER'" type="button" class="btn btn-outline-danger btn-sm">
               {{ t.etat }}
             </button>
 
@@ -56,8 +56,13 @@
           <td>{{ t.langue?.libelle }}</td>
           <td>
             <div class="d-flex order-actions">
-              <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2"><i class='bx bx-show-alt'></i></button>
-              <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3"><i class='bx bxs-trash'></i></button>
+              <button (click)="onShowDetailTraduction(t)" type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
+                <i class='bx bx-show-alt'></i>
+              </button>
+
+              <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3">
+                <i class='bx bxs-trash'></i>
+              </button>
             </div>
           </td>
         </tr>
