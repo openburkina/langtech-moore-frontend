@@ -22,6 +22,6 @@ export class DetailTraductionComponent implements OnInit {
   }
 
   onValideTraduction(type: string) {
-    
+
   }
 }
