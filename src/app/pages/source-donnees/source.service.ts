@@ -9,15 +9,14 @@ import {SourceDonnee} from "../../models/sourceDonnee.model";
 export class SourceService {
 
   constructor( private http: HttpClient,) { }
-  public createSourceDonnee(file: any): Observable<HttpResponse<SourceDonnee>> {
-    return this.http.post<SourceDonnee>(`/api/source-donnees/upload`, file, { observe: 'response' });
+  public createSourceDonnee(sourceDonnee: SourceDonnee): Observable<HttpResponse<SourceDonnee>> {
+
+    return this.http.post<SourceDonnee>(`/api/source-donnees/upload`, sourceDonnee, { observe: 'response' });
   }
 
   upload(file: any): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-
     formData.append('file', file);
-
     return this.http.post<SourceDonnee>(`/api/source-donnees/upload`, formData, { observe: 'response' });
 
   }
