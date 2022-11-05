@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient, HttpEvent, HttpRequest, HttpResponse} from "@angular/common/http";
 import {SourceDonnee} from "../../models/sourceDonnee.model";
+import {MResponse} from "../../models/m-response.model";
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,8 @@ import {SourceDonnee} from "../../models/sourceDonnee.model";
 export class SourceService {
 
   constructor( private http: HttpClient,) { }
-  public createSourceDonnee(file: any): Observable<HttpResponse<SourceDonnee>> {
-    return this.http.post<SourceDonnee>(`/api/source-donnees/upload`, file, { observe: 'response' });
+  public createSourceDonnee(sourceDonnee: SourceDonnee): Observable<HttpResponse<MResponse>> {
+    return this.http.post<MResponse>(`/api/source-donnees/upload`, sourceDonnee, { observe: 'response' });
   }
 
   upload(file: any): Observable<HttpEvent<any>> {

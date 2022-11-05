@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {FormBuilder, Validators} from "@angular/forms";
 import {SourceDonnee} from "../../../models/sourceDonnee.model";
 import {SourceService} from "../source.service";
+import {Notification} from "rxjs";
+import {NotificationService} from "../../../common/services/notification.service";
 
 @Component({
   selector: 'app-create-update-source-donnee',
@@ -15,26 +17,36 @@ export class CreateUpdateSourceDonneeComponent implements OnInit {
     categId: [],
   });
   sourceDonnee: SourceDonnee = new SourceDonnee();
-  constructor(private activeModal: NgbActiveModal,
-              private fb: FormBuilder,
-              private sourceService: SourceService) { }
+
+  constructor(
+    private activeModal: NgbActiveModal,
+    private fb: FormBuilder,
+    private sourceService: SourceService,
+    private notification: NotificationService,
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
   getSourceInfo() {
-    console.warn("fichier",this.sourceDonnee.file);
-    this.sourceService.createSourceDonnee(this.sourceDonnee.file).subscribe(data=>{
-      if(data){
-        console.warn("cool")
+    this.sourceService.createSourceDonnee(this.sourceDonnee).subscribe({
+      next: response => {
+        if (response.body !== null && response.body.code === '0') {
+          this.notification.open('success', `Votre source de données a été uploadée avec succès !`);
+          this.onCloseModal();
+        } else {
+          this.notification.open('danger', `Une erreur est survenue lors de l'upload des sources de données !`);
+        }
+      },
+      error: error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de l'upload des sources de données !`;
+        this.notification.open('danger', message);
       }
-    })
+    });
 
   }
 
-  fermer() {
-
-  }
 
   onFileChange(event: any) {
     const reader = new FileReader();
@@ -47,5 +59,9 @@ export class CreateUpdateSourceDonneeComponent implements OnInit {
         source: this.sourceDonnee.file,
       });
     };
+  }
+
+  onCloseModal() {
+    this.activeModal.close();
   }
 }
