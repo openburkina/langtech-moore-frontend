@@ -33,7 +33,7 @@ export class CreateUpdateSourceDonneeComponent implements OnInit {
   }
 
   fermer() {
-
+    this.activeModal.close();
   }
 
   onFileChange(event: any) {

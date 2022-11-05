@@ -13,6 +13,10 @@ export class SourceService {
     return this.http.post<SourceDonnee>(`/api/source-donnees/upload`, file, { observe: 'response' });
   }
 
+  public createSourceDonneeLigne(source: SourceDonnee): Observable<HttpResponse<SourceDonnee>> {
+    return this.http.post<SourceDonnee>(`/api/source-donnees`, source, { observe: 'response' });
+  }
+
   upload(file: any): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
 
@@ -22,13 +26,15 @@ export class SourceService {
 
   }
 
-  public updateSourceDonnee(source: SourceDonnee): Observable<HttpResponse<SourceDonnee>> {
-    return this.http.put<SourceDonnee>(`/api/source-donnees/${source.id}`, source.file, { observe: 'response' });
+ public updateSourceDonnee(source: SourceDonnee): Observable<HttpResponse<SourceDonnee>> {
+    return this.http.put<SourceDonnee>(`/api/source-donnees/${source.id}`, source, { observe: 'response' });
   }
 
   public deleteSourceDonnee(sourceId: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`/api/source-donnees/${sourceId}`, { observe: 'response' });
   }
+
+
 
   public getSourceDonnees(): Observable<HttpResponse<SourceDonnee[]>> {
     return this.http.get<SourceDonnee[]>(`/api/source-donnees`, { observe: 'response' });
