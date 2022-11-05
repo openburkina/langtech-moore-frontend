@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {UserService} from "../user.service";
 import {ProfilService} from "../../profils/profil.service";
-import {GroupeService} from "../../groupes/groupe.service";
 import {NotificationService} from "../../../common/services/notification.service";
 import {Groupe} from "../../../models/groupe.model";
 import {Profil} from "../../../models/profil.model";
@@ -43,7 +42,6 @@ export class UsersComponent implements OnInit {
     private fb: FormBuilder,
     private userSerice: UserService,
     private profilService: ProfilService,
-    private groupeService: GroupeService,
     private notification: NotificationService,
   ) { }
 

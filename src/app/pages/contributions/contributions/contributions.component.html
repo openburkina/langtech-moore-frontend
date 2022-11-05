@@ -1,0 +1,158 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Contributions</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Liste des contributions
+        </li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="ms-auto">
+    <div class="btn-group">
+      <button type="button" class="btn btn-white text-primary" (click)="onChangeFilterStatus()">
+        {{ enableShowFilter ? 'Fermer le filtre' : 'Filtrer la liste' }}
+      </button>
+      <div class="btn-group" (click)="onChangeFilterStatus()">
+        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1">
+          <i [class]="enableShowFilter ? 'lni lni-close text-danger' : 'bx bx-slider'"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="card" *ngIf="enableShowFilter">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-lg-12 col-xl-12 h5 text-primary">
+        Rechercher une demande par les critères suivants
+      </div>
+    </div>
+    <hr/>
+
+    <div class="row align-items-center">
+      <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3">
+            <label for="sourceDonnee" class="col-form-label">Source de données</label>
+            <input class="form-control" type="text" name="sourceDonnee" formControlName="sourceDonnee" id="sourceDonnee">
+          </div>
+
+          <div class="col-12 col-md-4 mb-3">
+            <label for="etat" class="col-form-label">Statut de la traduction</label>
+            <select class="form-control" name="etat" formControlName="etat" id="etat">
+              <option [ngValue]="null" selected disabled>--Sélectionner le statut--</option>
+              <option [ngValue]="'EN_ATTENTE'">EN ATTENTE</option>
+              <option [ngValue]="'VALIDER'">VALIDER</option>
+              <option [ngValue]="'REJETER'">REJETER</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4 mb-3">
+            <label for="type" class="col-form-label">Type de la traduction</label>
+            <select class="form-control" name="type" formControlName="type" id="type">
+              <option [ngValue]="null" selected disabled>--Sélectionner le statut--</option>
+              <option [ngValue]="'TEXTE'">TEXTE</option>
+              <option [ngValue]="'AUDIO'">AUDIO</option>
+            </select>
+          </div>
+
+          <div class="form-group text-center">
+            <button type="reset" (click)="onResetSearchForm()" class="btn btn-outline-danger radius-30 mx-3">
+              <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+            </button>
+
+            <button type="submit" class="btn btn-outline-success radius-30">
+              <i class='bx bx-search'></i> Rechercher
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-lg-flex align-items-center mb-4 gap-3">
+      <div class="position-relative alert alert-warning" *ngIf="!traductions$">
+        <h6>
+          Aucune contribution enregistrée !
+        </h6>
+      </div>
+    </div>
+    <div class="table-responsive" *ngIf="traductions$">
+      <table class="table mb-0">
+        <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Source de données</th>
+          <th>Type de traduction</th>
+          <th>Etat</th>
+          <th>Langue</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let t of traductions$ | async; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ t.libelle }}</td>
+          <td>{{ t.type }}</td>
+          <td>
+            <button *ngIf="t.etat === 'EN_ATTENTE'" type="button" class="btn btn-outline-warning btn-sm">
+              {{ t.etat }}
+            </button>
+
+            <button *ngIf="t.etat === 'VALIDER'" type="button" class="btn btn-outline-success btn-sm">
+              {{ t.etat }}
+            </button>
+
+            <button *ngIf="t.etat === 'REJETER'" type="button" class="btn btn-outline-danger btn-sm">
+              {{ t.etat }}
+            </button>
+
+          </td>
+          <td>{{ t.langue?.libelle }}</td>
+          <td>
+            <div class="d-flex order-actions">
+              <button (click)="onShowDetailTraduction(t)" type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
+                <i class='bx bx-show-alt'></i>
+              </button>
+
+              <button (click)="onConfirmDeleteTraduction(t)" type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3">
+                <i class='bx bxs-trash'></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex">
+  <div class="mx-auto">
+    <ngb-pagination [collectionSize]="totalItems"
+                    [(page)]="ngbPaginationPage"
+                    [pageSize]="itemsPerPage"
+                    [maxSize]="maxSize"
+                    [rotate]="true"
+                    [boundaryLinks]="false"
+                    class="pagination"
+                    (pageChange)="loadPage($event)">
+
+      <ng-template ngbPaginationPrevious>Préc.</ng-template>
+      <ng-template ngbPaginationNext>Suiv.</ng-template>
+    </ngb-pagination>
+
+  </div>
+</div>

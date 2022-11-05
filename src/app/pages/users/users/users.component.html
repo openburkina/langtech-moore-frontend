@@ -132,28 +132,14 @@
     <div class="card radius-15">
       <div class="card-body text-center">
         <div class="p-4 border radius-15">
-          <img src="{{ u.photo === null ? 'assets/images/avatars/avatar.png' : 'data:' + u.photoContentType + ';base64,' + u.photo }}" width="110" height="110" class="rounded-circle shadow bg-white" alt="">
+          <img src="assets/images/avatars/avatar.png" width="110" height="110" class="rounded-circle shadow bg-white" alt="">
           <h6 class="mb-0 mt-5">{{ u.prenom + ' ' + u.nom.toUpperCase() }}</h6>
-          <p class="mb-3">{{ u.fonction }}</p>
           <div class="list-inline contacts-social mt-3 mb-2">
-            <a [href]="u.facebook" target="_blank"
-               class="list-inline-item bg-facebook text-white border-0" *ngIf="u.facebook">
-              <i class="bx bxl-facebook"></i>
-            </a>
 
-            <a [href]="u.twitter" target="_blank" *ngIf="u.twitter"
-               class="list-inline-item bg-twitter text-white border-0">
-              <i class="bx bxl-twitter"></i>
-            </a>
 
             <a [href]="'mailto:' + u.email" target="_blank" *ngIf="u.email"
                class="list-inline-item bg-google text-white border-0">
               <i class="bx bxl-google"></i>
-            </a>
-
-            <a [href]="u.linkedIn" target="_blank" *ngIf="u.linkedIn"
-               class="list-inline-item bg-linkedin text-white border-0">
-              <i class="bx bxl-linkedin"></i>
             </a>
           </div>
           <div class="d-grid">
