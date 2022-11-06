@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {ContributeurService} from "../contributeur.service";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {Utilisateur} from "../../../models/utilisateur.model";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {NotificationService} from "../../../common/services/notification.service";
 
 @Component({
   selector: 'app-contributeurs',
@@ -9,14 +11,70 @@ import {Utilisateur} from "../../../models/utilisateur.model";
   styleUrls: ['./contributeurs.component.scss']
 })
 export class ContributeursComponent implements OnInit {
+  formSearch!: FormGroup;
   contributeurs$: Observable<Utilisateur[]> = new Observable<Utilisateur[]>();
+  enableShowFilter: boolean;
+  totalItems = 0;
+  itemsPerPage = 20;
+  maxSize = 20;
+  page = 0;
+  ngbPaginationPage = 1;
+  contributeur: Utilisateur = new Utilisateur();
 
   constructor(
     private contributeurService: ContributeurService,
+    private fb: FormBuilder,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit(): void {
+    this.initSearchForm();
     this.contributeurs$ = this.contributeurService.contributeurs$;
+  }
+
+  initSearchForm() {
+    this.formSearch = this.fb.group({
+      nom: null,
+      prenom: null,
+      email: null,
+      telephone: null,
+    });
+  }
+
+  onResetSearchForm() {
+
+  }
+
+  onChangeFilterStatus() {
+    this.enableShowFilter = !this.enableShowFilter;
+  }
+
+  onSearch() {
+    this.contributeur.nom = this.formSearch.get('nom').value;
+    this.contributeur.prenom = this.formSearch.get('prenom').value;
+    this.contributeur.email = this.formSearch.get('email').value;
+    this.contributeur.telephone = this.formSearch.get('telephone').value;
+    this.getContributeurs();
+
+  }
+
+  getContributeurs() {
+    const request = {
+      page: this.page,
+      size: this.itemsPerPage,
+    };
+    this.contributeurService.getContributeursWitCriteria(this.contributeur, request).subscribe({
+      next: response => {
+        if (response.body !== null) {
+          this.totalItems = Number(response.headers.get('X-Total-Count'));
+          this.contributeurs$ = of(response.body);
+        }
+      },
+      error: error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des contributeurs !`;
+        this.notification.open('danger', message);
+      }
+    });
   }
 
 }

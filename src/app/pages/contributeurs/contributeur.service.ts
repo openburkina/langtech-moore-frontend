@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {Utilisateur} from "../../models/utilisateur.model";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
+import {Traduction} from "../../models/traduction.model";
+import {Langue} from "../../models/langue.model";
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +25,15 @@ export class ContributeurService {
         }
       }
     })
+  }
+
+  public getContributeursWitCriteria(contributeur: Utilisateur, req: any): Observable<HttpResponse<Traduction[]>> {
+    let options: HttpParams = new HttpParams();
+    Object.keys(req).forEach(
+      key => {
+        options = options.set(key, req[key]);
+      }
+    );
+    return this.http.post<Langue[]>(`/api/utilisateurs/criteria`, contributeur, { params: options, observe: 'response' });
   }
 }

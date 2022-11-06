@@ -10,48 +10,109 @@
       </ol>
     </nav>
   </div>
-</div>
-<!--end breadcrumb-->
-
-<div class="card">
-  <div class="card-body">
-    <div class="d-lg-flex align-items-center mb-4 gap-3">
-      <div class="position-relative alert alert-warning" *ngIf="!contributeurs$">
-        <h6>
-          Aucune contribution enregistrée !
-        </h6>
+  <div class="ms-auto">
+    <div class="btn-group">
+      <button type="button" class="btn btn-white text-primary" (click)="onChangeFilterStatus()">
+        {{ enableShowFilter ? 'Fermer le filtre' : 'Filtrer la liste' }}
+      </button>
+      <div class="btn-group" (click)="onChangeFilterStatus()">
+        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1">
+          <i [class]="enableShowFilter ? 'lni lni-close text-danger' : 'bx bx-slider'"></i>
+        </button>
       </div>
-    </div>
-    <div class="table-responsive" *ngIf="contributeurs$">
-      <table class="table mb-0">
-        <thead class="table-light">
-        <tr>
-          <th>#</th>
-          <th>Nom</th>
-          <th>Prénom(s)</th>
-          <th>Téléphone</th>
-          <th>Email</th>
-          <th>Point de fidelité</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let u of contributeurs$ | async; index as i">
-          <td>{{ i + 1 }}</td>
-          <td>{{ u.nom }}</td>
-          <td>{{ u.prenom }}</td>
-          <td>{{ u.telephone }}</td>
-          <td>{{ u.email }}</td>
-          <td>{{ u.pointFidelite }}</td>
-          <td>
-            <div class="d-flex order-actions">
-              <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2"><i class='bx bx-show-alt'></i></button>
-              <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3"><i class='bx bxs-trash'></i></button>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>
+<!--end breadcrumb-->
+<div class="card" *ngIf="enableShowFilter">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-lg-12 col-xl-12 h5 text-primary">
+        Rechercher une demande par les critères suivants
+      </div>
+    </div>
+    <hr/>
+    <div class="row align-items-center">
+      <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-12 col-md-3 mb-3">
+            <label for="nom" class="col-form-label">Nom</label>
+            <input class="form-control" type="text" name="nom" formControlName="nom"
+                   id="nom">
+          </div>
+          <div class="col-12 col-md-3 mb-3">
+            <label for="prenom" class="col-form-label">Prénom</label>
+            <input class="form-control" type="text" name="prenom" formControlName="prenom"
+                   id="prenom">
+          </div>
+
+          <div class="col-12 col-md-3 mb-3">
+            <label for="email" class="col-form-label">Adresse email</label>
+            <input class="form-control" type="text" name="email" formControlName="email"
+                   id="email">
+          </div>
+          <div class="col-12 col-md-3 mb-3">
+            <label for="telephone" class="col-form-label">Téléphone</label>
+            <input class="form-control" type="text" name="telephone" formControlName="telephone"
+                   id="telephone">
+          </div>
+
+          <div class="form-group text-center">
+            <button type="reset" (click)="onResetSearchForm()" class="btn btn-outline-danger radius-30 mx-3">
+              <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+            </button>
+
+            <button type="submit" class="btn btn-outline-success radius-30">
+              <i class='bx bx-search'></i> Rechercher
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+  <div class="card">
+    <div class="card-body">
+      <div class="d-lg-flex align-items-center mb-4 gap-3">
+        <div class="position-relative alert alert-warning" *ngIf="!contributeurs$">
+          <h6>
+            Aucune contribution enregistrée !
+          </h6>
+        </div>
+      </div>
+      <div class="table-responsive" *ngIf="contributeurs$">
+        <table class="table mb-0">
+          <thead class="table-light">
+          <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Prénom(s)</th>
+            <th>Téléphone</th>
+            <th>Email</th>
+            <th>Point de fidelité</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let u of contributeurs$ | async; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ u.nom }}</td>
+            <td>{{ u.prenom }}</td>
+            <td>{{ u.telephone }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.pointFidelite }}</td>
+            <td>
+              <div class="d-flex order-actions">
+                <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2"><i
+                  class='bx bx-show-alt'></i></button>
+                <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3"><i
+                  class='bx bxs-trash'></i></button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

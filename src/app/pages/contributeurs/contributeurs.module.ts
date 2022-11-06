@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ContributeursRoutingModule } from './contributeurs-routing.module';
 import { ContributeursComponent } from './contributeurs/contributeurs.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -11,7 +12,9 @@ import { ContributeursComponent } from './contributeurs/contributeurs.component'
   ],
   imports: [
     CommonModule,
-    ContributeursRoutingModule
+    ContributeursRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class ContributeursModule { }
