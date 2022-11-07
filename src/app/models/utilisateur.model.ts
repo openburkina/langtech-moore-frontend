@@ -1,4 +1,5 @@
 import {Profil} from "./profil.model";
+import {User} from "./user.model";
 
 export class Utilisateur {
   constructor(
@@ -12,7 +13,9 @@ export class Utilisateur {
     public pointFidelite?: number,
     public profil?: Profil,
     public statut?: boolean,
+    public user?: User,
   ) {
     this.profil = new Profil();
+    this.user = new User();
   }
 }

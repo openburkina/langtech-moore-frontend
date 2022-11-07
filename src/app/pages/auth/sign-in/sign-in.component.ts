@@ -52,6 +52,7 @@ export class SignInComponent implements OnInit {
     const result = this.loginService.login(this.loginVM).subscribe(
       response => {
         console.log(response);
+        this.parameter.currentUser = response;
         this.notification.open('success', `Bienvenue ${response.login} !`);
         this.router.navigate(['pages/home']);
         result.unsubscribe();

@@ -7,9 +7,12 @@ import * as jwt_decode from 'jwt-decode';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LoginVM} from "../../../models/LoginVM";
+import {User} from "../../../models/user.model";
+import {AccountService} from "./account.service";
 
 interface JwtToken {
   id_token: string;
+  utilisateur: User;
 }
 
 @Injectable({
@@ -21,6 +24,7 @@ export class AuthJwtService {
     private $localStorage: LocalStorageService,
     private $sessionStorage: SessionStorageService,
     private router: Router,
+    private accoutService: AccountService,
   ) { }
 
   getToken(): string {
@@ -54,7 +58,7 @@ export class AuthJwtService {
     return this.http
       .post<JwtToken>('/api/authenticate', credentials)
       .pipe(map((response: JwtToken) => {
-        console.log(response);
+
           this.authenticateSuccess(response, credentials.rememberMe);
         }),
       );
@@ -67,7 +71,9 @@ export class AuthJwtService {
   }
 
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
+    console.log(response);
     const jwt = response.id_token;
+    this.accoutService.saveCurrentUserInfos(response.utilisateur);
     if (rememberMe) {
       this.$localStorage.store('authenticationToken', jwt);
     } else {

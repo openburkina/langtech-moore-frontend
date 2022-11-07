@@ -6,6 +6,8 @@ import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import {catchError, shareReplay, tap} from 'rxjs/operators';
 import {User} from "../../../models/user.model";
 import {DataParameter} from "../../../models/data_parameter.model";
+import {ParameterService} from "../../../common/services/parameter.service";
+import {Utilisateur} from "../../../models/utilisateur.model";
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,7 @@ export class AccountService {
     private router: Router,
     private $localStorage: LocalStorageService,
     private $sessionStorage: SessionStorageService,
-    // private parameter: ParameterService,
+    private parameter: ParameterService,
   ) {}
 
   save(account: Account): Observable<{}> {
@@ -40,24 +42,23 @@ export class AccountService {
     if (!Array.isArray(authorities)) {
       authorities = [authorities];
     }
-    console.log(authorities);
     return this.userIdentity.authorities.some((authority: string) => authorities.includes(authority));
   }
 
   identity(force?: boolean): Observable<User | null> {
     const currentUserInfos = this.getCurrentUserInfos();
-    console.log(currentUserInfos);
-    if (!currentUserInfos) {
+    const authoritiesIsExist = !!currentUserInfos?.user?.authorities;
+    if (!currentUserInfos || !authoritiesIsExist) {
       if (!this.accountCache$ || force || !this.isAuthenticated()) {
         this.accountCache$ = this.fetch().pipe(
           catchError(() => {
-            console.log('ERROR LOGING...');
             return of(null);
           }),
           tap((user: User | null) => {
             console.log(user);
             if (user) {
-              this.saveCurrentUserInfos(user);
+              currentUserInfos.user = user;
+              this.saveCurrentUserInfos(currentUserInfos);
               this.authenticate(user);
               this.navigateToStoredUrl();
             }
@@ -66,8 +67,8 @@ export class AccountService {
         );
       }
     } else {
-      this.accountCache$ = of(currentUserInfos);
-      this.authenticate(currentUserInfos);
+      this.accountCache$ = of(currentUserInfos.user);
+      this.authenticate(currentUserInfos.user);
       this.navigateToStoredUrl();
     }
     return this.accountCache$;
@@ -95,11 +96,12 @@ export class AccountService {
     }
   }
 
-  private saveCurrentUserInfos(currentUserInfos: User): void {
+  public saveCurrentUserInfos(currentUserInfos: Utilisateur): void {
+
     this.$localStorage.store(this.CURRENT_USER_INFOS_KEY, currentUserInfos);
   }
 
-  private getCurrentUserInfos(): User {
+  public getCurrentUserInfos(): Utilisateur {
     return this.$localStorage.retrieve(this.CURRENT_USER_INFOS_KEY);
   }
 }

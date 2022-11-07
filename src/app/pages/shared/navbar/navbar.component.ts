@@ -1,48 +1,53 @@
 import { Component , OnInit } from '@angular/core';
 import { SidebarService } from '../sidebar/sidebar.service';
 import {LoginService} from "../../auth/services/login.service";
+import {ParameterService} from "../../../common/services/parameter.service";
+import {AccountService} from "../../auth/services/account.service";
 
 
 @Component({
-    selector: 'app-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
 
 export class NavbarComponent implements OnInit{
+  username: string;
 
-    constructor(
-      public sidebarservice: SidebarService,
-      private loginService: LoginService,
-    ) { }
+  constructor(
+    public sidebarservice: SidebarService,
+    private loginService: LoginService,
+    private parameter: ParameterService,
+    private accountService: AccountService,
+  ) { }
 
-    toggleSidebar() {
-        this.sidebarservice.setSidebarState(!this.sidebarservice.getSidebarState());
-    }
+  toggleSidebar() {
+    this.sidebarservice.setSidebarState(!this.sidebarservice.getSidebarState());
+  }
 
-    getSideBarState() {
-        return this.sidebarservice.getSidebarState();
-    }
+  getSideBarState() {
+    return this.sidebarservice.getSidebarState();
+  }
 
-    hideSidebar() {
-        this.sidebarservice.setSidebarState(true);
-    }
+  hideSidebar() {
+    this.sidebarservice.setSidebarState(true);
+  }
 
-    ngOnInit() {
+  ngOnInit() {
+    this.username = this.accountService.getCurrentUserInfos()?.email;
+    /* Search Bar */
+    $(document).ready(function () {
+      $(".mobile-search-icon").on("click", function () {
+        $(".search-bar").addClass("full-search-bar")
+      }),
+        $(".search-close").on("click", function () {
+          $(".search-bar").removeClass("full-search-bar")
+        })
+    });
 
-        /* Search Bar */
-        $(document).ready(function () {
-            $(".mobile-search-icon").on("click", function () {
-                $(".search-bar").addClass("full-search-bar")
-            }),
-            $(".search-close").on("click", function () {
-                $(".search-bar").removeClass("full-search-bar")
-            })
-        });
-
-    }
+  }
 
   onLogout() {
-      this.loginService.logout();
+    this.loginService.logout();
   }
 }
