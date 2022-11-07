@@ -40,12 +40,22 @@
     <div class="row align-items-center">
       <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
         <div class="row">
-          <div class="col-12 col-md-4 mb-3">
+          <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <label for="contributeurId" class="col-form-label">Contributeur</label>
+            <select class="form-control" name="contributeurId" formControlName="contributeurId" id="contributeurId">
+              <option [ngValue]="null" selected disabled>--Sélectionner le contributeur--</option>
+              <option [ngValue]="'EN_ATTENTE'">EN ATTENTE</option>
+              <option [ngValue]="'VALIDER'">VALIDER</option>
+              <option [ngValue]="'REJETER'">REJETER</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3 mb-3">
             <label for="sourceDonnee" class="col-form-label">Source de données</label>
             <input class="form-control" type="text" name="sourceDonnee" formControlName="sourceDonnee" id="sourceDonnee">
           </div>
 
-          <div class="col-12 col-md-4 mb-3">
+          <div class="col-12 col-md-6 col-lg-3 mb-3">
             <label for="etat" class="col-form-label">Statut de la traduction</label>
             <select class="form-control" name="etat" formControlName="etat" id="etat">
               <option [ngValue]="null" selected disabled>--Sélectionner le statut--</option>
@@ -55,7 +65,7 @@
             </select>
           </div>
 
-          <div class="col-12 col-md-4 mb-3">
+          <div class="col-12 col-md-6 col-lg-3 mb-3">
             <label for="type" class="col-form-label">Type de la traduction</label>
             <select class="form-control" name="type" formControlName="type" id="type">
               <option [ngValue]="null" selected disabled>--Sélectionner le statut--</option>
@@ -139,7 +149,7 @@
   </div>
 </div>
 
-<div class="d-flex">
+<div class="d-flex" *ngIf="traductions$">
   <div class="mx-auto">
     <ngb-pagination [collectionSize]="totalItems"
                     [(page)]="ngbPaginationPage"

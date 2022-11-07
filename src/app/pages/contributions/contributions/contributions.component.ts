@@ -41,6 +41,7 @@ export class ContributionsComponent implements OnInit {
 
   initSearchForm() {
     this.formSearch = this.fb.group({
+      contributeurId: null,
       sourceDonnee: null,
       etat: null,
       type: null,
