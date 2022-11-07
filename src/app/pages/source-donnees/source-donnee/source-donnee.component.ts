@@ -6,6 +6,7 @@ import {SourceService} from "../source.service";
 import {SourceDonnee} from "../../../models/sourceDonnee.model";
 import {UpdateSourceDonneeComponent} from "../update-source-donnee/update-source-donnee.component";
 import {ConfirmComponent} from "../../../common/confirm/confirm.component";
+import {FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-source-donnee',
@@ -15,6 +16,8 @@ import {ConfirmComponent} from "../../../common/confirm/confirm.component";
 export class SourceDonneeComponent implements OnInit {
   listeCategories: any[] = [];
   sourceDonne: SourceDonnee[] = [];
+  enableShowFilter: boolean;
+  formSearch!: FormGroup;
 
   constructor( private modalService: NgbModal,
                private notification: NotificationService,
@@ -86,5 +89,17 @@ export class SourceDonneeComponent implements OnInit {
         result.unsubscribe();
       }
     );
+  }
+
+  onChangeFilterStatus() {
+    this.enableShowFilter = !this.enableShowFilter;
+  }
+
+  onSearch() {
+
+  }
+
+  onResetSearchForm() {
+
   }
 }

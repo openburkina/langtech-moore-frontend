@@ -10,8 +10,50 @@
       </ol>
     </nav>
   </div>
+  <div class="ms-auto">
+    <div class="btn-group">
+      <button type="button" class="btn btn-white text-primary" (click)="onChangeFilterStatus()">
+        {{ enableShowFilter ? 'Fermer le filtre' : 'Filtrer la liste' }}
+      </button>
+      <div class="btn-group" (click)="onChangeFilterStatus()">
+        <button type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1">
+          <i [class]="enableShowFilter ? 'lni lni-close text-danger' : 'bx bx-slider'"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
 <!--end breadcrumb-->
+
+<div class="card" *ngIf="enableShowFilter">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-lg-12 col-xl-12 h5 text-primary">
+        Rechercher une demande par les critères suivants
+      </div>
+    </div>
+    <hr/>
+
+    <div class="row align-items-center">
+      <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3">
+            <input class="form-control" type="text" placeholder="Rechercher par source donnée..." name="sourceDonnee" formControlName="sourceDonnee" id="sourceDonnee">
+          </div>
+
+          <div class="col-12 col-md-4">
+            <button type="reset" (click)="onResetSearchForm()" class="btn btn-outline-danger radius-30 mx-3">
+              <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+            </button>
+            <button type="submit" class="btn btn-outline-success radius-30">
+              <i class='bx bx-search'></i> Rechercher
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <div class="card">
   <div class="card-body">
@@ -25,8 +67,13 @@
           <i class="lni lni-angle-double-right"></i>
         </h6>
       </div>
-      <div class="ms-auto"><button (click)="openModalCreate()" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Ajouter source donnée excel</button></div>
-      <div class="ms-auto"><button (click)="update(null)" class="btn btn-primary radius-30 mt-2 mt-lg-0"><i class="bx bxs-plus-square"></i>Ajouter une ligne de source de donnée</button></div>
+
+      <div class="ms-auto"></div>
+      <div class="ms-auto"></div>
+    </div>
+    <div class="text-right">
+      <button (click)="openModalCreate()" class="btn btn-primary radius-30 mt-2 mt-lg-0 mx-2"><i class="bx bxs-plus-square"></i>Ajouter source donnée excel</button>
+      <button (click)="update(null)" class="btn btn-primary radius-30 mt-2 mt-lg-0 text-right"><i class="bx bxs-plus-square"></i>Ajouter une ligne de source de donnée</button>
     </div>
     <div class="table-responsive" *ngIf="sourceDonne.length > 0">
       <table class="table mb-0">

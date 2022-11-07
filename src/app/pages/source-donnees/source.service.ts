@@ -39,4 +39,8 @@ export class SourceService {
   public findBySuperSourceDonneeId(id: number): Observable<HttpResponse<SourceDonnee[]>> {
     return this.http.get<SourceDonnee[]>(`/api/source-donnees/sous-source/${id}`, { observe: 'response' });
   }
+
+  public updateSourceDonneeLigne(source: SourceDonnee): Observable<HttpResponse<SourceDonnee>> {
+    return this.http.put<SourceDonnee>(`/api/source-donnees/${source.id}`, source, { observe: 'response' });
+  }
 }
