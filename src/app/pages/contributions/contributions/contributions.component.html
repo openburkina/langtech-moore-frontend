@@ -44,9 +44,10 @@
             <label for="contributeurId" class="col-form-label">Contributeur</label>
             <select class="form-control" name="contributeurId" formControlName="contributeurId" id="contributeurId">
               <option [ngValue]="null" selected disabled>--Sélectionner le contributeur--</option>
-              <option [ngValue]="'EN_ATTENTE'">EN ATTENTE</option>
-              <option [ngValue]="'VALIDER'">VALIDER</option>
-              <option [ngValue]="'REJETER'">REJETER</option>
+              <option *ngFor="let c of constributeurs" [ngValue]="c.id">
+                {{ c.nom + ' ' + c.prenom + ' ' + c.email }}
+              </option>
+
             </select>
           </div>
 
@@ -92,14 +93,14 @@
 
 <div class="card">
   <div class="card-body">
-    <div class="d-lg-flex align-items-center mb-4 gap-3">
-      <div class="position-relative alert alert-warning" *ngIf="!traductions$">
+    <div class="d-lg-flex align-items-center mb-4">
+      <div class="position-relative text-center alert alert-warning" *ngIf="traductions.length === 0">
         <h6>
           Aucune contribution enregistrée !
         </h6>
       </div>
     </div>
-    <div class="table-responsive" *ngIf="traductions$">
+    <div class="table-responsive" *ngIf="traductions.length !== 0">
       <table class="table mb-0">
         <thead class="table-light">
         <tr>
@@ -149,7 +150,7 @@
   </div>
 </div>
 
-<div class="d-flex" *ngIf="traductions$">
+<div class="d-flex" *ngIf="traductions.length !== 0">
   <div class="mx-auto">
     <ngb-pagination [collectionSize]="totalItems"
                     [(page)]="ngbPaginationPage"

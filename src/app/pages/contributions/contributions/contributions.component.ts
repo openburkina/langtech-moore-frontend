@@ -7,6 +7,8 @@ import {DetailTraductionComponent} from "../detail-traduction/detail-traduction.
 import {ConfirmComponent} from "../../../common/confirm/confirm.component";
 import {NotificationService} from "../../../common/services/notification.service";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ContributeurService} from "../../contributeurs/contributeur.service";
+import {Utilisateur} from "../../../models/utilisateur.model";
 
 @Component({
   selector: 'app-contributions',
@@ -21,6 +23,8 @@ export class ContributionsComponent implements OnInit {
   ngbPaginationPage = 1;
 
   traductions$: Observable<Traduction[]>;
+  traductions: Traduction[] = [];
+  constributeurs: Utilisateur[] = [];
   enableShowFilter: boolean;
   formSearch!: FormGroup;
   traduction: Traduction;
@@ -30,6 +34,7 @@ export class ContributionsComponent implements OnInit {
     private modal: NgbModal,
     private notification: NotificationService,
     private fb: FormBuilder,
+    private contributeurService: ContributeurService,
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +51,28 @@ export class ContributionsComponent implements OnInit {
       etat: null,
       type: null,
     });
+    this.getContributeurs();
+  }
+
+  getContributeurs() {
+    const request = {
+      page: this.page,
+      size: 1000,
+    };
+    const contributeur = new Utilisateur();
+    contributeur.typeUtilisateur = 'CONTRIBUTEUR';
+    this.contributeurService.getContributeursWitCriteria(contributeur, request).subscribe({
+      next: response => {
+        if (response.body !== null) {
+          this.constributeurs = response.body;
+        }
+        console.log(response.body);
+      },
+      error: error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des contributeurs !`;
+        this.notification.open('danger', message);
+      }
+    });
   }
 
   getTraductions() {
@@ -57,7 +84,7 @@ export class ContributionsComponent implements OnInit {
       next: response => {
         if (response.body !== null) {
           this.totalItems = Number(response.headers.get('X-Total-Count'));
-          this.traductions$ = of(response.body);
+          this.traductions = response.body;
         }
       },
       error: error => {
@@ -101,14 +128,14 @@ export class ContributionsComponent implements OnInit {
 
   onSearch() {
     this.traduction.sourceDonnee.libelle = this.formSearch.value.sourceDonnee;
-      this.traduction.etat = this.formSearch.value.etat;
+    this.traduction.etat = this.formSearch.value.etat;
     this.traduction.type = this.formSearch.value.type;
-    console.log(this.traduction);
+    this.traduction.utilisateur.id = this.formSearch.value.contributeurId;
     this.getTraductions();
   }
 
   onResetSearchForm() {
-
+    this.formSearch.reset();
   }
 
   loadPage(pageNumber: number) {
