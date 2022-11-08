@@ -44,7 +44,7 @@
             <label for="contributeurId" class="col-form-label">Contributeur</label>
             <select class="form-control" name="contributeurId" formControlName="contributeurId" id="contributeurId">
               <option [ngValue]="null" selected disabled>--Sélectionner le contributeur--</option>
-              <option *ngFor="let c of constributeurs" [ngValue]="c.id">
+              <option *ngFor="let c of contributeurs$ | async" [ngValue]="c.id">
                 {{ c.nom + ' ' + c.prenom + ' ' + c.email }}
               </option>
 

@@ -23,8 +23,8 @@ export class ContributionsComponent implements OnInit {
   ngbPaginationPage = 1;
 
   traductions$: Observable<Traduction[]>;
+  contributeurs$: Observable<Utilisateur[]> = new Observable<Utilisateur[]>();
   traductions: Traduction[] = [];
-  constributeurs: Utilisateur[] = [];
   enableShowFilter: boolean;
   formSearch!: FormGroup;
   traduction: Traduction;
@@ -40,6 +40,7 @@ export class ContributionsComponent implements OnInit {
   ngOnInit(): void {
     this.enableShowFilter = false;
     this.traduction = new Traduction();
+    this.contributeurs$ = this.contributeurService.contributeurs$;
     this.initSearchForm();
     this.getTraductions();
   }
@@ -50,28 +51,6 @@ export class ContributionsComponent implements OnInit {
       sourceDonnee: null,
       etat: null,
       type: null,
-    });
-    this.getContributeurs();
-  }
-
-  getContributeurs() {
-    const request = {
-      page: this.page,
-      size: 1000,
-    };
-    const contributeur = new Utilisateur();
-    contributeur.typeUtilisateur = 'CONTRIBUTEUR';
-    this.contributeurService.getContributeursWitCriteria(contributeur, request).subscribe({
-      next: response => {
-        if (response.body !== null) {
-          this.constributeurs = response.body;
-        }
-        console.log(response.body);
-      },
-      error: error => {
-        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des contributeurs !`;
-        this.notification.open('danger', message);
-      }
     });
   }
 

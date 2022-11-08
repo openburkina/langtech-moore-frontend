@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Utilisateur} from "../../models/utilisateur.model";
 import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
-import {Traduction} from "../../models/traduction.model";
-import {Langue} from "../../models/langue.model";
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +16,10 @@ export class ContributeurService {
   }
 
   getContributeurs(): void {
-    this.http.get<Utilisateur[]>(`/api/utilisateurs`, { observe: 'response' }).subscribe({
+    this.http.get<Utilisateur[]>(`/api/utilisateurs/contributeurs`, { observe: 'response' }).subscribe({
       next: response => {
         if (response.body) {
+          console.log(response.body);
           this.contributeurs$.next(response.body);
         }
       }
