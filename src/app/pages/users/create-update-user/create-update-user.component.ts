@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, Validators} from "@angular/forms";
+import {Component, Input, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "../user.service";
 import {ProfilService} from "../../profils/profil.service";
-import {Groupe} from "../../../models/groupe.model";
 import {Profil} from "../../../models/profil.model";
 import {NotificationService} from "../../../common/services/notification.service";
-import {IDropdownSettings} from "ng-multiselect-dropdown/multiselect.model";
 import {Utilisateur} from "../../../models/utilisateur.model";
-import {ActivatedRoute} from "@angular/router";
-import {Location} from "@angular/common";
+import {Observable} from "rxjs";
+import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-create-update-user',
@@ -16,101 +14,47 @@ import {Location} from "@angular/common";
   styleUrls: ['./create-update-user.component.scss']
 })
 export class CreateUpdateUserComponent implements OnInit {
+  @Input()
   utilisateur: Utilisateur;
-  groupes: Groupe[] = [];
-  profils: Profil[] = [];
-  formUser = this.fb.group({
-    nom: [null, Validators.required],
-    prenom: [null, Validators.required],
-    fonction: [null],
-    email: [null, [Validators.required, Validators.email]],
-    specialite: [null],
-    matricule: [null],
-    telephone: [null],
-    profilId: [null, Validators.required],
-    groupes: [null, Validators.required],
-  });
+  profils$: Observable<Profil[]>;
 
-  dropdownSettings: IDropdownSettings = {
-    singleSelection: false,
-    idField: 'id',
-    textField: 'libelle',
-    selectAllText: 'Tout Sélectionner',
-    unSelectAllText: 'Desélectionner',
-    itemsShowLimit: 10,
-    allowSearchFilter: true,
-    searchPlaceholderText: 'Rechercher...',
-    maxHeight: 1000,
-    noDataAvailablePlaceholderText: 'Aucun groupe trouvé...',
-  };
+  formUser!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private userSerice: UserService,
     private profilService: ProfilService,
     private notification: NotificationService,
-    private activeRoute: ActivatedRoute,
-    private _location: Location,
+    private activeModal: NgbActiveModal,
   ) { }
 
   ngOnInit(): void {
-    this.utilisateur = new Utilisateur();
-    this.utilisateur.id = Number(this.activeRoute.snapshot.params.userId);
+    this.profils$ = this.profilService.profils$;
+    this.createUserForm();
   }
 
-
-
-  getProfils() {
-    const result = this.profilService.getProfils().subscribe(
-      response => {
-        if (response.body === null || response.body.length === 0) {
-          this.notification.open('warning', 'Aucun profil trouvé !');
-        } else {
-          this.profils = response.body;
-
-          // Get infos to update user
-          if (this.utilisateur.id) {
-            this.getOneUser();
-          }
-        }
-        result.unsubscribe();
-      },
-      error => {
-        result.unsubscribe();
-        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des profils !`;
-        this.notification.open('danger', message);
-      }
-    );
-  }
-
-  getOneUser() {
-    const result = this.userSerice.getOneUser(this.utilisateur.id).subscribe(
-      response => {
-        console.log(response.body);
-        if (response.body === null) {
-          this.notification.open('warning', `Aucune information trouvé pour cet utilisateur !`);
-        } else {
-          this.utilisateur = response.body;
-          this.createUserForm();
-        }
-        result.unsubscribe();
-      },
-      error => {
-        result.unsubscribe();
-        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la recupération des informations de l'utilisateur !`;
-        this.notification.open('danger', message);
-      }
-    );
-  }
 
   createUserForm() {
-    this.formUser.patchValue({
-      nom: this.utilisateur.nom,
-      prenom: this.utilisateur.prenom,
-      email: this.utilisateur.email,
-      telephone: this.utilisateur.telephone,
-      profilId: this.utilisateur.profil.id,
+    this.formUser =  this.fb.group({
+      nom: [null, Validators.required],
+      prenom: [null, Validators.required],
+      email: [null, [Validators.required, Validators.email]],
+      telephone: [null],
+      profilId: [null, Validators.required],
     });
+
+    if (this.utilisateur !== null) {
+      this.formUser.patchValue({
+        nom: this.utilisateur.nom,
+        prenom: this.utilisateur.prenom,
+        email: this.utilisateur.email,
+        telephone: this.utilisateur.telephone,
+        profilId: this.utilisateur?.profil?.id,
+      });
+    } else {
+      this.utilisateur = new Utilisateur();
+    }
+
   }
 
   getUserInfos() {
@@ -119,6 +63,7 @@ export class CreateUpdateUserComponent implements OnInit {
     this.utilisateur.telephone = this.formUser.get('telephone').value;
     this.utilisateur.email = this.formUser.get('email').value;
     this.utilisateur.email = this.utilisateur.email.toLowerCase();
+    this.utilisateur.login = this.utilisateur.email.toLowerCase();
     this.saveUser();
   }
 
@@ -139,7 +84,6 @@ export class CreateUpdateUserComponent implements OnInit {
           this.notification.open('success', `L'utilisateur #${this.utilisateur.email} a été créé avec succès !`);
           this.formUser.reset();
           this.utilisateur = new Utilisateur();
-          this.goBack();
         }
         result.unsubscribe();
       },
@@ -160,7 +104,6 @@ export class CreateUpdateUserComponent implements OnInit {
           this.notification.open('success', `L'utilisateur #${this.utilisateur.email} a été mis à jour avec succès !`);
           this.formUser.reset();
           this.utilisateur = new Utilisateur();
-          this.goBack();
         }
         result.unsubscribe();
       },
@@ -172,10 +115,7 @@ export class CreateUpdateUserComponent implements OnInit {
     );
   }
 
-  goBack() {
-    this._location.back();
-  }
-
-  onPhotoChange(event: any) {
+  onCloseModal(param: boolean) {
+    this.activeModal.close(param);
   }
 }

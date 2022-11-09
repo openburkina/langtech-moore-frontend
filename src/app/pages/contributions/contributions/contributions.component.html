@@ -113,7 +113,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let t of traductions$ | async; index as i">
+        <tr *ngFor="let t of traductions; index as i">
           <td>{{ i + 1 }}</td>
           <td>{{ t.libelle }}</td>
           <td>{{ t.type }}</td>
@@ -134,7 +134,7 @@
           <td>{{ t.langue?.libelle }}</td>
           <td>
             <div class="d-flex order-actions">
-              <button (click)="onShowDetailTraduction(t)" type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
+              <button (click)="getOneTraduction(t.id)" type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
                 <i class='bx bx-show-alt'></i>
               </button>
 

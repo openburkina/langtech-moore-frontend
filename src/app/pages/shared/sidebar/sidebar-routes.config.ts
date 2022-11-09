@@ -38,15 +38,12 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '', title: 'Utilisateurs', icon: 'lni lni-users', class: 'sub', badge: '', badgeClass: '', isExternalLink: false, submenu: [
       {
-        path: '/pages/users/create-update-user/null', title: 'Créer un utilisateur', icon: 'bx bx-user-plus', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
-      },
-      {
         path: '/pages/users', title: 'Liste des Utilisateurs', icon: 'lni lni-users', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
       },
       {
         path: '/pages/profils', title: 'Liste des Profils', icon: 'lni lni-unlink', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []
       },
-    ], authorities: ['ROLE_USER', 'ROLE_ADMIN']
+    ], authorities: ['ROLE_USER', 'ROLE_ADMIN'],
   },
   /*{
     path: '', title: '', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: [], authorities: []

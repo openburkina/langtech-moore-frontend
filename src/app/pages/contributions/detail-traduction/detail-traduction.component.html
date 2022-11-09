@@ -42,6 +42,10 @@
       <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
         <span class="text-secondary">{{ traduction?.contenuTexte }}</span>
       </li>
+
+      <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay">
+        <source src="{{ audio }}" />
+      </audio>
     </ul>
 
     <div class="mx-auto text-right">

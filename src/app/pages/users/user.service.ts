@@ -46,6 +46,16 @@ export class UserService {
     return this.http.get<User[]>(`/api/utilisateurs`, { params: options, observe: 'response' });
   }
 
+  public getUsersByCriteria(user: Utilisateur, req: any): Observable<HttpResponse<Utilisateur[]>> {
+    let options: HttpParams = new HttpParams();
+    Object.keys(req).forEach(
+      key => {
+        options = options.set(key, req[key]);
+      }
+    );
+    return this.http.post<Utilisateur[]>(`/api/utilisateurs/criteria`, user, { params: options, observe: 'response' });
+  }
+
   public changePassword(password: PasswordChange): Observable<HttpResponse<void>> {
     return this.http.post<void>(`/api/account/change-password`, password, { observe: 'response'});
   }

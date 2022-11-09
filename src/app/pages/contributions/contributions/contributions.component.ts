@@ -61,6 +61,7 @@ export class ContributionsComponent implements OnInit {
     };
     this.contributionService.getTraductions(this.traduction, request).subscribe({
       next: response => {
+        console.log(response.body);
         if (response.body !== null) {
           this.totalItems = Number(response.headers.get('X-Total-Count'));
           this.traductions = response.body;
@@ -73,9 +74,26 @@ export class ContributionsComponent implements OnInit {
     });
   }
 
+  getOneTraduction(traductionId: number): void {
+    this.contributionService.getOne(traductionId).subscribe({
+      next: response => {
+        if (response.body) {
+          this.onShowDetailTraduction(response.body);
+        } else {
+          this.notification.open('danger', `Une erreur est survenue lors de la récupération des traductions !`);
+        }
+      },
+      error: error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des traductions !`;
+        this.notification.open('danger', message);
+      }
+    });
+  }
+
   async onShowDetailTraduction(t: Traduction) {
     const currentModal = await this.modal.open(DetailTraductionComponent, { size: "lg", backdrop: "static", centered: true});
     currentModal.componentInstance.traduction = t;
+    currentModal.componentInstance.audio = `data:audio/mp4;base64,${t.contenuAudio}`;
   }
 
   async onConfirmDeleteTraduction(t: Traduction) {

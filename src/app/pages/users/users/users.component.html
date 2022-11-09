@@ -19,7 +19,7 @@
       <div class="card-body">
         <div class="row align-items-center">
           <div class="col-lg-6 col-xl-6">
-            <a routerLink="/pages/users/create-update-user/null" class="btn btn-primary mb-3 mb-lg-0 radius-30">
+            <a (click)="openCreateUpdateModal(null)" class="btn btn-primary mb-3 mb-lg-0 radius-30">
               <i class='bx bx-user-plus'></i>Créer un nouvel utilisateur
             </a>
           </div>
@@ -48,58 +48,31 @@
         <div class="row align-items-center" *ngIf="enableShowFilter">
           <form [formGroup]="formSearch" (ngSubmit)="onSearchUser()">
             <div class="row">
-              <div class="col-12 col-md-3 mb-3">
+              <div class="col-12 col-md-6 mb-3">
                 <label for="nom" class="col-form-label">Nom</label>
                 <input class="form-control" type="text" name="nom" formControlName="nom" id="nom">
               </div>
 
-              <div class="col-12 col-md-3 mb-3">
+              <div class="col-12 col-md-6 mb-3">
                 <label for="prenom" class="col-form-label">Prénom(s)</label>
                 <input class="form-control" type="text" name="prenom" formControlName="prenom" id="prenom">
               </div>
 
-              <div class="col-12 col-md-3 mb-3">
+              <div class="col-12 col-md-6 mb-3">
                 <label for="email" class="col-form-label">Email</label>
                 <input class="form-control" type="email" name="email" formControlName="email" id="email">
               </div>
 
-              <div class="col-12 col-md-3 mb-3">
-                <label for="fonction" class="col-form-label">Fonction</label>
-                <input class="form-control" type="text" name="fonction" formControlName="fonction" id="fonction">
-              </div>
-
-              <div class="col-12 col-md-3 mb-3">
-                <label for="specialite" class="col-form-label">Spécialité</label>
-                <input class="form-control" type="text" name="specialite" formControlName="specialite" id="specialite">
-              </div>
-
-              <div class="col-12 col-md-3 mb-3">
+              <div class="col-12 col-md-6 mb-3">
                 <label for="profilId" class="col-form-label">Profil</label>
                 <select class="form-control" name="profilId" formControlName="profilId" id="profilId">
-                  <option selected disabled>--Sélectionner le profil--</option>
-                  <option *ngFor="let p of profils" [ngValue]="p.id">{{ p.libelle }}</option>
-                </select>
-              </div>
-
-              <div class="col-12 col-md-3 mb-3">
-                <label for="groupeId" class="col-form-label">Groupe</label>
-                <select class="form-control" name="groupeId" formControlName="groupeId" id="groupeId">
-                  <option selected disabled>--Sélectionner le groupe--</option>
-                  <option *ngFor="let g of groupes" [ngValue]="g.id">{{ g.libelle }}</option>
-                </select>
-              </div>
-
-              <div class="col-12 col-md-3 mb-3">
-                <label for="statut" class="col-form-label">Statut</label>
-                <select class="form-control" name="statut" formControlName="statut" id="statut">
-                  <option selected disabled>--Sélectionner le statut--</option>
-                  <option [ngValue]="true">Activé</option>
-                  <option [ngValue]="false">Desactivé</option>
+                  <option [ngValue]="null" selected disabled>--Sélectionner le profil--</option>
+                  <option *ngFor="let p of profils$ | async" [ngValue]="p.id">{{ p.libelle }}</option>
                 </select>
               </div>
 
               <div class="form-group text-center">
-                <button type="reset" class="btn btn-outline-danger radius-30 mx-3">
+                <button type="reset" (click)="onResetForm()" class="btn btn-outline-danger radius-30 mx-3">
                   <i class='bx bx-x-circle mr-1'></i> Rénitialiser
                 </button>
 
@@ -127,33 +100,81 @@
   </div>
 </div>
 
-<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-4" *ngIf="users.length !== 0">
-  <div class="col" *ngFor="let u of users">
-    <div class="card radius-15">
-      <div class="card-body text-center">
-        <div class="p-4 border radius-15">
-          <img src="assets/images/avatars/avatar.png" width="110" height="110" class="rounded-circle shadow bg-white" alt="">
-          <h6 class="mb-0 mt-5">{{ u.prenom + ' ' + u.nom.toUpperCase() }}</h6>
-          <div class="list-inline contacts-social mt-3 mb-2">
-
-
-            <a [href]="'mailto:' + u.email" target="_blank" *ngIf="u.email"
-               class="list-inline-item bg-google text-white border-0">
-              <i class="bx bxl-google"></i>
-            </a>
-          </div>
-          <div class="d-grid">
-            <a href="JavaScript:;" class="btn {{ u.statut ? 'btn-outline-success' : 'btn-outline-danger' }} radius-15 mb-2">
-              {{ u.statut ? 'Activé' : 'Desactivé' }}
-            </a>
-
-            <a routerLink="/pages/users/detail-user/{{ u.id }}" class="btn btn-outline-primary radius-15">
-              <i class="bx bx-show"></i> Voir plus
-            </a>
-          </div>
-        </div>
+<div class="card">
+  <div class="card-body">
+    <div class="d-lg-flex align-items-center mb-4 gap-3" *ngIf="users.length === 0">
+      <div class="position-relative">
+        <h6>
+          Aucun utilisateur enregistré.
+          Veuillez cliquer sur le bouton suivant
+          <i class="lni lni-arrow-right"></i>
+        </h6>
       </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="users.length !== 0">
+      <table class="table mb-0">
+        <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Login</th>
+          <th>Nom</th>
+          <th>Prénom(s)</th>
+          <th>Téléphone</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let u of users; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ u.email }}</td>
+          <td>{{ u.nom }}</td>
+          <td>{{ u.prenom }}</td>
+          <td>{{ u.telephone }}</td>
+          <td>{{ u.email }}</td>
+          <td>
+            <div class="d-flex order-actions">
+              <button type="button" (click)="onShowUserDetail(u)" class="btn btn-outline-primary radius-30 btn-sm mx-2">
+                <i class='bx bx-show'></i>
+              </button>
+
+              <button type="button" (click)="onResetPassword(u)" class="btn btn-outline-warning radius-30 btn-sm mx-2">
+                <i class='bx bx-reset'></i>
+              </button>
+
+              <button type="button" (click)="openCreateUpdateModal(u)" class="btn btn-outline-success radius-30 btn-sm">
+                <i class='bx bxs-edit'></i>
+              </button>
+
+              <button type="button" (click)="openConfirmModal(u)" class="btn btn-outline-danger radius-30 btn-sm mx-2">
+                <i class='bx bxs-trash'></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+
+<div class="d-flex" *ngIf="users.length !== 0">
+  <div class="mx-auto">
+    <ngb-pagination [collectionSize]="totalItems"
+                    [(page)]="ngbPaginationPage"
+                    [pageSize]="itemsPerPage"
+                    [maxSize]="maxSize"
+                    [rotate]="true"
+                    [boundaryLinks]="false"
+                    class="pagination"
+                    (pageChange)="loadPage($event)">
+
+      <ng-template ngbPaginationPrevious>Préc.</ng-template>
+      <ng-template ngbPaginationNext>Suiv.</ng-template>
+    </ngb-pagination>
+
+  </div>
+</div>
+
 <!--end row-->
