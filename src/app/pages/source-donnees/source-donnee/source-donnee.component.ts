@@ -15,9 +15,15 @@ import {FormGroup} from "@angular/forms";
 })
 export class SourceDonneeComponent implements OnInit {
   listeCategories: any[] = [];
-  sourceDonne: SourceDonnee[] = [];
+  sourcesDonnees: SourceDonnee[] = [];
   enableShowFilter: boolean;
   formSearch!: FormGroup;
+  totalItems = 0;
+  itemsPerPage = 20;
+  maxSize = 20;
+  page = 0;
+  ngbPaginationPage = 1;
+  sourceDonnee: SourceDonnee = new SourceDonnee();
 
   constructor( private modalService: NgbModal,
                private notification: NotificationService,
@@ -33,7 +39,7 @@ export class SourceDonneeComponent implements OnInit {
       msg => {
         if (msg == true) {
           this.notification.open('success', `L'opération a été effectuée avec succès !`);
-
+          this.getSourceDonnee();
         }
       }
     );
@@ -42,7 +48,7 @@ export class SourceDonneeComponent implements OnInit {
   getSourceDonnee(): void{
     this.sourceService.getSourceDonnees().subscribe(data=>{
       if(data.body){
-        this.sourceDonne = data.body;
+        this.sourcesDonnees = data.body;
       }
     })
   }
@@ -58,7 +64,7 @@ export class SourceDonneeComponent implements OnInit {
       msg => {
         if (msg == true) {
           this.notification.open('success', `L'opération a été effectuée avec succès !`);
-
+          this.getSourceDonnee();
         }
       }
     );
@@ -101,5 +107,29 @@ export class SourceDonneeComponent implements OnInit {
 
   onResetSearchForm() {
 
+  }
+
+  loadPage(pageNumber: number) {
+    this.page = pageNumber - 1;
+    this.getSourceDonneeWithCriteria();
+  }
+
+  getSourceDonneeWithCriteria() {
+    const request = {
+      page: this.page,
+      size: this.itemsPerPage,
+    };
+    this.sourceService.getSourceDonneWithCriteria(this.sourceDonnee, request).subscribe({
+      next: response => {
+        if (response.body !== null) {
+          this.totalItems = Number(response.headers.get('X-Total-Count'));
+          this.sourcesDonnees = response.body;
+        }
+      },
+      error: error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des sources de données !`;
+        this.notification.open('danger', message);
+      }
+    });
   }
 }

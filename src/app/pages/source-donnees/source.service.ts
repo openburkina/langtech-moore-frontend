@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
-import {HttpClient, HttpEvent, HttpRequest, HttpResponse} from "@angular/common/http";
+import {HttpClient, HttpEvent, HttpParams, HttpRequest, HttpResponse} from "@angular/common/http";
 import {SourceDonnee} from "../../models/sourceDonnee.model";
 import {MResponse} from "../../models/m-response.model";
+import {Traduction} from "../../models/traduction.model";
+import {Langue} from "../../models/langue.model";
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +45,18 @@ export class SourceService {
   public updateSourceDonneeLigne(source: SourceDonnee): Observable<HttpResponse<SourceDonnee>> {
     return this.http.put<SourceDonnee>(`/api/source-donnees/${source.id}`, source, { observe: 'response' });
   }
+  public createSourceDonneeLigne(sourceDonnee: SourceDonnee): Observable<HttpResponse<MResponse>> {
+    return this.http.post<MResponse>(`/api/source-donnees`, sourceDonnee, { observe: 'response' });
+  }
+
+  public getSourceDonneWithCriteria(sourceDonnee: SourceDonnee, req: any): Observable<HttpResponse<Traduction[]>> {
+    let options: HttpParams = new HttpParams();
+    Object.keys(req).forEach(
+      key => {
+        options = options.set(key, req[key]);
+      }
+    );
+    return this.http.post<Langue[]>(`/api/source-donnees/criteria`, sourceDonnee, { params: options, observe: 'response' });
+  }
+
 }

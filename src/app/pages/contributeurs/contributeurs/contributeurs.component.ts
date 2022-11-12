@@ -20,6 +20,7 @@ export class ContributeursComponent implements OnInit {
   page = 0;
   ngbPaginationPage = 1;
   contributeur: Utilisateur = new Utilisateur();
+  contributeurs: Utilisateur[] = [];
 
   constructor(
     private contributeurService: ContributeurService,
@@ -67,7 +68,9 @@ export class ContributeursComponent implements OnInit {
       next: response => {
         if (response.body !== null) {
           this.totalItems = Number(response.headers.get('X-Total-Count'));
-          this.contributeurs$ = of(response.body);
+         // this.contributeurs$ = of(response.body);
+          this.contributeurs = response.body;
+          console.warn("contributeurs",this.contributeurs);
         }
       },
       error: error => {
@@ -75,6 +78,11 @@ export class ContributeursComponent implements OnInit {
         this.notification.open('danger', message);
       }
     });
+  }
+
+  loadPage(pageNumber: number) {
+    this.page = pageNumber - 1;
+    this.getContributeurs();
   }
 
 }
