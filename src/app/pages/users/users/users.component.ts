@@ -61,6 +61,7 @@ export class UsersComponent implements OnInit {
     this.searchUser.typeUtilisateur = 'UTILISATEUR';
     const result = this.userService.getUsersByCriteria(this.searchUser, request).subscribe(
       response => {
+        console.log(response.body);
         if (response.body === null || response.body.length === 0) {
           this.notification.open('warning', `Aucun utilisateur trouvé !`);
         } else {
@@ -135,10 +136,8 @@ export class UsersComponent implements OnInit {
 
   private deleteUser(u: Utilisateur) {
     this.userService.deleteUser(u.id).subscribe({
-      next: response => {
-        if (response.body) {
-          this.onSearchUser();
-        }
+      next: () => {
+        this.onSearchUser();
       },
       error: error => {
         const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la suppression de l'utilisateur !`;

@@ -60,6 +60,10 @@ export class UserService {
     return this.http.post<void>(`/api/account/change-password`, password, { observe: 'response'});
   }
 
+  public onUpdateProfil(user: Utilisateur): Observable<HttpResponse<User>> {
+    return this.http.post<User>(`/api/account`, user, { observe: 'response'});
+  }
+
   public requestPasswordReset(email: string): Observable<HttpResponse<void>> {
     return this.http.post<void>(`api/account/reset-password/init`, email, { observe: 'response' });
   }

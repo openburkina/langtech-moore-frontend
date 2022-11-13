@@ -64,6 +64,9 @@ export class CreateUpdateUserComponent implements OnInit {
     this.utilisateur.email = this.formUser.get('email').value;
     this.utilisateur.email = this.utilisateur.email.toLowerCase();
     this.utilisateur.login = this.utilisateur.email.toLowerCase();
+    this.utilisateur.profil.id = this.formUser.value.profilId;
+    this.utilisateur.typeUtilisateur = 'UTILISATEUR';
+    console.log(this.utilisateur);
     this.saveUser();
   }
 
@@ -84,6 +87,7 @@ export class CreateUpdateUserComponent implements OnInit {
           this.notification.open('success', `L'utilisateur #${this.utilisateur.email} a été créé avec succès !`);
           this.formUser.reset();
           this.utilisateur = new Utilisateur();
+          this.onCloseModal(true);
         }
         result.unsubscribe();
       },
@@ -104,6 +108,7 @@ export class CreateUpdateUserComponent implements OnInit {
           this.notification.open('success', `L'utilisateur #${this.utilisateur.email} a été mis à jour avec succès !`);
           this.formUser.reset();
           this.utilisateur = new Utilisateur();
+          this.onCloseModal(true);
         }
         result.unsubscribe();
       },

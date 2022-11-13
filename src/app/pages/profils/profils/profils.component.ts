@@ -25,6 +25,7 @@ export class ProfilsComponent implements OnInit {
 
   ngOnInit(): void {
     this.profils$ = this.profilService.profils$;
+    console.log(this.profils$);
   }
 
   async openConfirmModal(p: Profil) {
