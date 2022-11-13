@@ -39,7 +39,7 @@ export class CreateUpdateUserComponent implements OnInit {
       nom: [null, Validators.required],
       prenom: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
       telephone: [null],
       profilId: [null, Validators.required],
     });
