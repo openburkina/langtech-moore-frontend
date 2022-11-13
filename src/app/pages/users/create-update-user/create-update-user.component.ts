@@ -39,6 +39,7 @@ export class CreateUpdateUserComponent implements OnInit {
       nom: [null, Validators.required],
       prenom: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.email]],
       telephone: [null],
       profilId: [null, Validators.required],
     });
@@ -79,6 +80,7 @@ export class CreateUpdateUserComponent implements OnInit {
   }
 
   createUser() {
+    this.utilisateur.password = this.formUser.value.password;
     const result = this.userSerice.createUser(this.utilisateur).subscribe(
       response => {
         if (response.body === null || !response.body.id) {
