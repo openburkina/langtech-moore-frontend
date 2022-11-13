@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {Traduction} from "../../../models/traduction.model";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import { saveAs } from 'file-saver';
+import {auto} from "@popperjs/core";
+import {ContributionService} from "../contribution.service";
+import {NotificationService} from "../../../common/services/notification.service";
 
 @Component({
   selector: 'app-detail-traduction',
@@ -10,12 +13,15 @@ import { saveAs } from 'file-saver';
 })
 export class DetailTraductionComponent implements OnInit {
   traduction: Traduction;
+  audio: string;
 
   constructor(
     private activeModal: NgbActiveModal,
   ) { }
 
   ngOnInit(): void {
+    // this.audio = `data:audio/mp4;base64,${this.traduction.contenuAudio}`;
+    console.log(this.audio);
   }
 
   onCloseModal() {
@@ -34,6 +40,7 @@ export class DetailTraductionComponent implements OnInit {
       int8Array[i] = byteString.charCodeAt(i);
     }
     const blob = new Blob([int8Array], { type: this.traduction.contenuAudioContentType });
+
     saveAs(blob, this.formatImageName(`${this.traduction.id}_${this.traduction.libelle.substring(0, 5)}`));
   }
 

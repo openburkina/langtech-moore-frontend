@@ -1,0 +1,99 @@
+<!--breadcrumb-->
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+  <div class="breadcrumb-title pe-3">Statistiques</div>
+  <div class="ps-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0 p-0">
+        <li class="breadcrumb-item"><a href="#" (click)="$event.preventDefault()"><i class="bx bx-home-alt"></i></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Liste des statistiques</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+<!--end breadcrumb-->
+
+<div class="card">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-lg-12 col-xl-12 h5 text-primary">
+        Rechercher une statistique par les critères suivants
+      </div>
+    </div>
+    <hr/>
+    <div class="row align-items-center">
+      <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-12 col-md-4 mb-3">
+            <label for="typeTraduction" class="col-form-label">Type de traduction</label>
+            <select class="form-control" id="typeTraduction" formControlName="typeTraduction" name="typeTraduction">
+              <option [ngValue]="null" selected disabled>--Sélectionner le type de traduction--</option>
+              <option [ngValue]="'AUDIO'">AUDIO</option>
+              <option [ngValue]="'TEXTE'">TEXTE</option>
+            </select>
+          </div>
+
+          <div class="col-12 col-md-4 mb-3">
+            <label for="startDate" class="col-form-label">Date de début</label>
+            <input class="form-control" type="date" name="startDate" formControlName="startDate"
+                   id="startDate">
+          </div>
+
+          <div class="col-12 col-md-4 mb-3">
+            <label for="endDate" class="col-form-label">Date de fin</label>
+            <input class="form-control" type="date" name="endDate" formControlName="endDate"
+                   id="endDate">
+          </div>
+
+          <div class="form-group text-center">
+            <button type="reset" (click)="onResetSearchForm()" class="btn btn-outline-danger radius-30 mx-3">
+              <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+            </button>
+
+            <button type="submit" class="btn btn-outline-success radius-30">
+              <i class='bx bx-search'></i> Rechercher
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <div class="d-lg-flex align-items-center mb-4 gap-3">
+      <div class="position-relative alert alert-warning" *ngIf="!contributeurs$">
+        <h6>
+          Aucune contribution enregistrée !
+        </h6>
+      </div>
+    </div>
+    <div class="table-responsive" *ngIf="contributeurs$">
+      <table class="table mb-0">
+        <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Contributeurs</th>
+          <th>Point de fidelité</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let u of contributeurs$ | async; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ u.email + ' - ' + u.nom + ' ' + u.prenom + ' - ' + u.telephone }}</td>
+          <td>{{ u.pointFidelite }}</td>
+          <td>
+            <div class="d-flex order-actions">
+              <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
+                <i class='bx bx-show-alt'></i></button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

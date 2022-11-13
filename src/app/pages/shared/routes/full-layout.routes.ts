@@ -69,5 +69,12 @@ export const Full_ROUTES: Routes = [
       m => m.ContributeursModule,
     ),
     canActivate: [UserRoutesAccessGuard],
+  },
+  {
+    path: 'statistiques',
+    loadChildren: () => import('../../statistiques/statistiques.module').then(
+      m => m.StatistiquesModule,
+    ),
+    canActivate: [UserRoutesAccessGuard],
   }
 ];

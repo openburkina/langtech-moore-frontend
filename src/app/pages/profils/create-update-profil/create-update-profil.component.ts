@@ -84,6 +84,7 @@ export class CreateUpdateProfilComponent implements OnInit {
     this.profil.libelle = this.formProfil.get('libelle').value;
     this.profil.description = this.formProfil.get('description').value;
     this.profil.authorities = this.formProfil.get('authorities').value;
+    console.log(this.profil);
     if (this.profil.id) {
       this.updateProfil();
     } else {

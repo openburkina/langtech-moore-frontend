@@ -38,10 +38,10 @@ export class ContributionService {
   }
 
   public delete(traductionId: number): Observable<HttpResponse<void>> {
-    return this.http.delete<void>(`/api/traductions/${traductionId}`, { observe: "response"}).pipe(
-      tap(
-        () => this.init(),
-      )
-    )
+    return this.http.delete<void>(`/api/traductions/${traductionId}`, { observe: "response"});
+  }
+
+  public getOne(traductionId: number): Observable<HttpResponse<Traduction>> {
+    return this.http.get<Traduction>(`/api/document/traduction?traductionId=${traductionId}`, { observe: "response"});
   }
 }

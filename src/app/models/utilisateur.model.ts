@@ -9,6 +9,7 @@ export class Utilisateur {
     public telephone?: string,
     public email?: string,
     public login?: string,
+    public password?: string,
     public typeUtilisateur?: string,
     public pointFidelite?: number,
     public profil?: Profil,

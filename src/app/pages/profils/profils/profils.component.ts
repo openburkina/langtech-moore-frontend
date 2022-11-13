@@ -6,6 +6,7 @@ import {Profil} from "../../../models/profil.model";
 import {ProfilService} from "../profil.service";
 import {CreateUpdateProfilComponent} from "../create-update-profil/create-update-profil.component";
 import {DetailProfilComponent} from "../detail-profil/detail-profil.component";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-profils',
@@ -14,6 +15,7 @@ import {DetailProfilComponent} from "../detail-profil/detail-profil.component";
 })
 export class ProfilsComponent implements OnInit {
   profils: Profil[] = [];
+  profils$: Observable<Profil[]>;
 
   constructor(
     private profilService: ProfilService,
@@ -22,7 +24,8 @@ export class ProfilsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProfils();
+    this.profils$ = this.profilService.profils$;
+    console.log(this.profils$);
   }
 
   async openConfirmModal(p: Profil) {
@@ -40,13 +43,6 @@ export class ProfilsComponent implements OnInit {
   async openCreateUpdateModal(p: Profil) {
     const currentModal = this.modal.open(CreateUpdateProfilComponent, { size: 'lg', backdrop: 'static', centered: true});
     currentModal.componentInstance.profil = p;
-    await currentModal.result.then(
-      response => {
-        if (response === true) {
-          this.getProfils();
-        }
-      }
-    );
   }
 
   private deleteProfil(p: Profil) {
@@ -54,31 +50,10 @@ export class ProfilsComponent implements OnInit {
       () => {
         result.unsubscribe();
         this.notification.open('success', `Le profil #${p.libelle} a été supprimé avec succès !`);
-        this.getProfils();
       },
       error => {
         result.unsubscribe();
         const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la suppression du profil !`;
-        this.notification.open('danger', message);
-      }
-    );
-  }
-
-  getProfils() {
-    this.profils = [];
-    const result = this.profilService.getProfils().subscribe(
-      response => {
-        console.log(response.body);
-        if (response.body === null || response.body.length === 0) {
-          this.notification.open('warning', 'Aucun profil trouvé !');
-        } else {
-          this.profils = response.body;
-        }
-        result.unsubscribe();
-      },
-      error => {
-        result.unsubscribe();
-        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des profils !`;
         this.notification.open('danger', message);
       }
     );

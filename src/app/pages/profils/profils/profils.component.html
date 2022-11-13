@@ -16,7 +16,7 @@
 <div class="card">
   <div class="card-body">
     <div class="d-lg-flex align-items-center mb-4 gap-3">
-      <div class="position-relative" *ngIf="profils.length === 0">
+      <div class="position-relative" *ngIf="!profils$">
         <h6>
           Aucun profil enregistré.
           Veuillez cliquer sur le bouton suivant
@@ -30,7 +30,7 @@
         </button>
       </div>
     </div>
-    <div class="table-responsive" *ngIf="profils.length !== 0">
+    <div class="table-responsive" *ngIf="profils$">
       <table class="table mb-0">
         <thead class="table-light">
         <tr>
@@ -41,7 +41,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let p of profils; index as i">
+        <tr *ngFor="let p of profils$ | async; index as i">
           <td>{{ i + 1 }}</td>
           <td>{{ p.libelle }}</td>
           <td>{{ p.description }}</td>
