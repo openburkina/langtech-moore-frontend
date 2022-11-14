@@ -3,7 +3,6 @@ import {AccountService} from './account.service';
 import {AuthJwtService} from './auth-jwt.service';
 import {Observable} from 'rxjs';
 import {flatMap} from 'rxjs/operators';
-import {DataParameter} from "../../../models/data_parameter.model";
 import {LoginVM} from "../../../models/LoginVM";
 import {User} from "../../../models/user.model";
 

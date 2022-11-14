@@ -26,9 +26,12 @@
           <input class="form-control" type="email" name="email" formControlName="email" id="email">
         </div>
 
-        <div class="col-12 col-md-6 mb-3">
+        <div class="col-12 col-md-6 mb-3" *ngIf="!utilisateur.id">
           <label for="password" class="col-form-label">Mot de passe <span class="text-danger">*</span></label>
           <input class="form-control" type="text" name="password" formControlName="password" id="password">
+          <span class="text-danger" *ngIf="formUser.get('password').invalid">
+            Le mot de passe doit avoir au moins 6 caractères !
+          </span>
         </div>
 
 

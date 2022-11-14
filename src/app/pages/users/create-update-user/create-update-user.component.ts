@@ -52,6 +52,8 @@ export class CreateUpdateUserComponent implements OnInit {
         telephone: this.utilisateur.telephone,
         profilId: this.utilisateur?.profil?.id,
       });
+      this.formUser.get('password').clearValidators();
+      console.log(this.formUser);
     } else {
       this.utilisateur = new Utilisateur();
     }
