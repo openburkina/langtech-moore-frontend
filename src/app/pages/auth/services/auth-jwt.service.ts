@@ -9,6 +9,7 @@ import {map} from 'rxjs/operators';
 import {LoginVM} from "../../../models/LoginVM";
 import {User} from "../../../models/user.model";
 import {AccountService} from "./account.service";
+import {ParameterService} from "../../../common/services/parameter.service";
 
 interface JwtToken {
   id_token: string;
@@ -25,6 +26,7 @@ export class AuthJwtService {
     private $sessionStorage: SessionStorageService,
     private router: Router,
     private accoutService: AccountService,
+    private parameter: ParameterService,
   ) { }
 
   getToken(): string {
@@ -58,7 +60,7 @@ export class AuthJwtService {
     return this.http
       .post<JwtToken>('/api/authenticate', credentials)
       .pipe(map((response: JwtToken) => {
-
+        console.log(response);
           this.authenticateSuccess(response, credentials.rememberMe);
         }),
       );
@@ -71,9 +73,9 @@ export class AuthJwtService {
   }
 
   private authenticateSuccess(response: JwtToken, rememberMe: boolean): void {
-    console.log(response);
     const jwt = response.id_token;
     this.accoutService.saveCurrentUserInfos(response.utilisateur);
+    this.parameter.currentUser = response.utilisateur;
     if (rememberMe) {
       this.$localStorage.store('authenticationToken', jwt);
     } else {

@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import {catchError, shareReplay, tap} from 'rxjs/operators';
 import {User} from "../../../models/user.model";
-import {DataParameter} from "../../../models/data_parameter.model";
 import {ParameterService} from "../../../common/services/parameter.service";
 import {Utilisateur} from "../../../models/utilisateur.model";
 
@@ -55,9 +54,9 @@ export class AccountService {
             return of(null);
           }),
           tap((user: User | null) => {
-            console.log(user);
             if (user) {
-              currentUserInfos.user = user;
+              currentUserInfos.user.authorities = user.authorities;
+              console.log(currentUserInfos);
               this.saveCurrentUserInfos(currentUserInfos);
               this.authenticate(user);
               this.navigateToStoredUrl();
@@ -82,8 +81,8 @@ export class AccountService {
     return this.authenticationState.asObservable();
   }
 
-  private fetch(): Observable<DataParameter> {
-    return this.http.get<DataParameter>('/api/account');
+  private fetch(): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>('/api/account');
   }
 
   private navigateToStoredUrl(): void {
@@ -97,7 +96,6 @@ export class AccountService {
   }
 
   public saveCurrentUserInfos(currentUserInfos: Utilisateur): void {
-
     this.$localStorage.store(this.CURRENT_USER_INFOS_KEY, currentUserInfos);
   }
 

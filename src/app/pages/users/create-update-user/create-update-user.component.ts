@@ -39,7 +39,7 @@ export class CreateUpdateUserComponent implements OnInit {
       nom: [null, Validators.required],
       prenom: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
       telephone: [null],
       profilId: [null, Validators.required],
     });
@@ -52,6 +52,8 @@ export class CreateUpdateUserComponent implements OnInit {
         telephone: this.utilisateur.telephone,
         profilId: this.utilisateur?.profil?.id,
       });
+      this.formUser.get('password').clearValidators();
+      console.log(this.formUser);
     } else {
       this.utilisateur = new Utilisateur();
     }

@@ -7,6 +7,7 @@ import {LoginService} from "../services/login.service";
 import {NotificationService} from "../../../common/services/notification.service";
 import {Location, LocationStrategy, PlatformLocation} from "@angular/common";
 import {ParameterService} from "../../../common/services/parameter.service";
+import {Utilisateur} from "../../../models/utilisateur.model";
 
 
 @Component({
@@ -51,11 +52,12 @@ export class SignInComponent implements OnInit {
     this.loginVM.rememberMe =  this.formLogin.get('rememberMe').value;
     const result = this.loginService.login(this.loginVM).subscribe(
       response => {
-        console.log(response);
-        this.parameter.currentUser = response;
-        this.notification.open('success', `Bienvenue ${response.login} !`);
-        this.router.navigate(['pages/home']);
         result.unsubscribe();
+        if (response) {
+          this.onSuccessLogin(this.parameter.currentUser);
+        } else {
+          this.notification.open('danger', `Une erreur est survenue lors de la connexion !`);
+        }
       },
       error => {
         result.unsubscribe();
@@ -63,6 +65,15 @@ export class SignInComponent implements OnInit {
         this.notification.open('danger', message);
       }
     );
+  }
+
+  private onSuccessLogin(currentUser: Utilisateur): void {
+    if (currentUser.user.resetKey) {
+      this.router.navigate(['auth', 'reset-password', currentUser?.user?.resetKey]);
+    } else {
+      this.notification.open('success', `Bienvenue ${currentUser?.user?.login} !`);
+      this.router.navigate(['pages/home']);
+    }
   }
 
   showPassword() {
