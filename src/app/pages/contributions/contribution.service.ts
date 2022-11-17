@@ -44,4 +44,8 @@ export class ContributionService {
   public getOne(traductionId: number): Observable<HttpResponse<Traduction>> {
     return this.http.get<Traduction>(`/api/document/traduction?traductionId=${traductionId}`, { observe: "response"});
   }
+
+  public onValide(traductionId: number, statut: string): Observable<HttpResponse<Traduction>> {
+    return this.http.get<Traduction>(`/api/traductions/validation/${traductionId}?etat=${statut}`, { observe: "response"});
+  }
 }

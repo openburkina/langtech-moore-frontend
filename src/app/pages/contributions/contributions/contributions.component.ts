@@ -21,8 +21,6 @@ export class ContributionsComponent implements OnInit {
   maxSize = 20;
   page = 0;
   ngbPaginationPage = 1;
-
-  traductions$: Observable<Traduction[]>;
   contributeurs$: Observable<Utilisateur[]> = new Observable<Utilisateur[]>();
   traductions: Traduction[] = [];
   enableShowFilter: boolean;
@@ -94,6 +92,13 @@ export class ContributionsComponent implements OnInit {
     const currentModal = await this.modal.open(DetailTraductionComponent, { size: "lg", backdrop: "static", centered: true});
     currentModal.componentInstance.traduction = t;
     currentModal.componentInstance.audio = `data:audio/mp4;base64,${t.contenuAudio}`;
+    currentModal.result.then(
+      response => {
+        if (response === true) {
+          this.onSearch();
+        }
+      }
+    );
   }
 
   async onConfirmDeleteTraduction(t: Traduction) {
