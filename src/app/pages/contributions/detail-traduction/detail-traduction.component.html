@@ -42,15 +42,11 @@
       <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
         <span class="text-secondary">{{ traduction?.contenuTexte }}</span>
       </li>
-
-      <audio controls="controls" autobuffer="autobuffer" autoplay="autoplay">
-        <source src="{{ audio }}" />
-      </audio>
     </ul>
 
     <div class="mx-auto text-right">
       <div class="btn-group">
-        <button class="btn btn-outline-danger radius-30" (click)="onCloseModal()">
+        <button class="btn btn-outline-danger radius-30" (click)="onCloseModal(false)">
           <i class='bx bx-x-circle mr-1'></i> Fermer
         </button>
 
@@ -58,12 +54,12 @@
           <i class='bx bx-download mr-1'></i> Télécharger
         </button>
 
-        <button type="button" (click)="onValideTraduction('VALIDE')"
+        <button type="button" (click)="onValideTraduction('VALIDER')"
                 class="btn btn-outline-success radius-30">
           <i class='bx bxs-edit'></i> Valider
         </button>
 
-        <button type="button" (click)="onValideTraduction('REJETE')"
+        <button type="button" (click)="onValideTraduction('REJETER')"
                 class="btn btn-outline-danger radius-30">
           <i class='bx bxs-edit'></i> Rejeter
         </button>

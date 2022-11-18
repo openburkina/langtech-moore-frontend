@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Traduction} from "../../../models/traduction.model";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import { saveAs } from 'file-saver';
-import {auto} from "@popperjs/core";
 import {ContributionService} from "../contribution.service";
 import {NotificationService} from "../../../common/services/notification.service";
 
@@ -13,23 +12,41 @@ import {NotificationService} from "../../../common/services/notification.service
 })
 export class DetailTraductionComponent implements OnInit {
   traduction: Traduction;
-  audio: string;
 
   constructor(
     private activeModal: NgbActiveModal,
+    private contributionService: ContributionService,
+    private notification: NotificationService,
   ) { }
 
   ngOnInit(): void {
-    // this.audio = `data:audio/mp4;base64,${this.traduction.contenuAudio}`;
-    console.log(this.audio);
   }
 
-  onCloseModal() {
-    this.activeModal.close();
+  onCloseModal(param: boolean) {
+    this.activeModal.close(param);
   }
 
-  onValideTraduction(type: string) {
-
+  onValideTraduction(statut: string) {
+    this.contributionService.onValide(this.traduction.id, statut).subscribe(
+      {
+        next: response => {
+          console.log(response.body);
+          let message = '';
+          if (response.body && response.body.etat == statut) {
+            message = `Contribution ${statut == 'VALIDER' ? 'validée' : 'rejetée'} avec succès !`;
+            this.notification.open('success', message);
+            this.onCloseModal(true);
+          } else {
+            message = `Une erreur est survenue lors de la validation de la contribution !`;
+            this.notification.open('danger', message);
+          }
+        },
+        error: error => {
+          const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la validation de la contribution !`;
+          this.notification.open('danger', message);
+        }
+      }
+    );
   }
 
   onDownloadFile() {
