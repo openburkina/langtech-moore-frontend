@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Langue} from "../../models/langue.model";
 import {Traduction} from "../../models/traduction.model";
 import {tap} from "rxjs/operators";
+import {Utilisateur} from "../../models/utilisateur.model";
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,20 @@ export class ContributionService {
 
   public getOne(traductionId: number): Observable<HttpResponse<Traduction>> {
     return this.http.get<Traduction>(`/api/document/traduction?traductionId=${traductionId}`, { observe: "response"});
+  }
+
+ /* getContributionByContributeur(id: number): void {
+    this.http.get<Traduction[]>(`/api/traductions/contributeurs/${id}`, { observe: 'response' }).subscribe({
+      next: response => {
+        if (response.body) {
+          console.log(response.body);
+          this.contributeurs$.next(response.body);
+        }
+      }
+    })
+  }*/
+
+  public getContributionByContributeur(id: number): Observable<HttpResponse<Traduction[]>> {
+    return this.http.get<Traduction[]>(`/api/traductions-by-contibuteur/${id}`, { observe: "response"});
   }
 }

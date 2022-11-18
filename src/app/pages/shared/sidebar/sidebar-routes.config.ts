@@ -27,7 +27,7 @@ export const ROUTES: RouteInfo[] = [
     authorities: ['ROLE_USER']
   },
   {
-    path: '/pages/contributeus',
+    path: '/pages/contributeurs',
     title: 'Contributeurs',
     icon: 'lni lni-users',
     class: '', badge: '', badgeClass: '',

@@ -35,4 +35,19 @@ export class ContributeurService {
     );
     return this.http.post<Utilisateur[]>(`/api/utilisateurs/criteria`, contributeur, { params: options, observe: 'response' });
   }
+
+  public deleteContributeur(contriId: number): Observable<HttpResponse<any>> {
+    return this.http.delete<any>(`/api/utilisateurs/${contriId}`, { observe: 'response' });
+  }
+
+  getContributionByContributeur(): void {
+    this.http.get<Utilisateur[]>(`/api/utilisateurs/contributeurs`, { observe: 'response' }).subscribe({
+      next: response => {
+        if (response.body) {
+          console.log(response.body);
+          this.contributeurs$.next(response.body);
+        }
+      }
+    })
+  }
 }

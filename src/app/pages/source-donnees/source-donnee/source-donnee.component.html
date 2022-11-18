@@ -38,7 +38,7 @@
       <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
         <div class="row">
           <div class="col-12 col-md-4 mb-3">
-            <input class="form-control" type="text" placeholder="Rechercher par source donnée..." name="sourceDonnee" formControlName="sourceDonnee" id="sourceDonnee">
+            <input class="form-control" type="text" placeholder="Rechercher par source donnée..." name="sourceDonnee" formControlName="libelle" id="libelle">
           </div>
 
           <div class="col-12 col-md-4">
@@ -105,7 +105,7 @@
   </div>
 </div>
 
-<div class="d-flex" *ngIf="sourcesDonnees.length !== 0">
+<div class="d-flex" *ngIf="sourcesDonnees.length > 0">
   <div class="mx-auto">
     <ngb-pagination [collectionSize]="totalItems"
                     [(page)]="ngbPaginationPage"
