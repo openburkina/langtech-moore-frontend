@@ -38,11 +38,11 @@ export class DetailContributeurComponent implements OnInit {
   }
 
   getContribution(id: number): void{
-    this.contributionService.getContributionByContributeur(id).subscribe(data=>{
-      if(data.body){
-        this.traductions = data.body;
-      }
-    })
+    // this.contributionService.getContributionByContributeur(id).subscribe(data=>{
+    //   if(data.body){
+    //     this.traductions = data.body;
+    //   }
+    // })
   }
 
   getOneTraduction(traductionId: number): void {

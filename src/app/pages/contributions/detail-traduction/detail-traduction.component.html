@@ -50,16 +50,16 @@
           <i class='bx bx-x-circle mr-1'></i> Fermer
         </button>
 
-        <button type="button" class="btn btn-outline-warning radius-30" (click)="onDownloadFile()">
+        <button *ngIf="traduction.type === 'AUDIO'" type="button" class="btn btn-outline-warning radius-30" (click)="onDownloadFile()">
           <i class='bx bx-download mr-1'></i> Télécharger
         </button>
 
-        <button type="button" (click)="onValideTraduction('VALIDER')"
+        <button *ngIf="traduction.etat === 'EN_ATTENTE'" type="button" (click)="onValideTraduction('VALIDER')"
                 class="btn btn-outline-success radius-30">
           <i class='bx bxs-edit'></i> Valider
         </button>
 
-        <button type="button" (click)="onValideTraduction('REJETER')"
+        <button *ngIf="traduction.etat === 'EN_ATTENTE'" type="button" (click)="onValideTraduction('REJETER')"
                 class="btn btn-outline-danger radius-30">
           <i class='bx bxs-edit'></i> Rejeter
         </button>
