@@ -64,7 +64,7 @@ export const Full_ROUTES: Routes = [
     canActivate: [UserRoutesAccessGuard],
   },
   {
-    path: 'contributeus',
+    path: 'contributeurs',
     loadChildren: () => import('../../contributeurs/contributeurs.module').then(
       m => m.ContributeursModule,
     ),

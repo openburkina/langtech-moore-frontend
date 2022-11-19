@@ -4,6 +4,9 @@ import {Observable, of} from "rxjs";
 import {Utilisateur} from "../../../models/utilisateur.model";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {NotificationService} from "../../../common/services/notification.service";
+import {ConfirmComponent} from "../../../common/confirm/confirm.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-contributeurs',
@@ -15,21 +18,26 @@ export class ContributeursComponent implements OnInit {
   contributeurs$: Observable<Utilisateur[]> = new Observable<Utilisateur[]>();
   enableShowFilter: boolean;
   totalItems = 0;
-  itemsPerPage = 20;
+  itemsPerPage = 10;
   maxSize = 20;
   page = 0;
   ngbPaginationPage = 1;
   contributeur: Utilisateur = new Utilisateur();
+  contributeurs: Utilisateur[] = [];
 
   constructor(
     private contributeurService: ContributeurService,
     private fb: FormBuilder,
     private notification: NotificationService,
+    private modalService:NgbModal,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     this.initSearchForm();
-    this.contributeurs$ = this.contributeurService.contributeurs$;
+    // this.contributeurs$ = this.contributeurService.contributeurs$;
+
+    this.getContributeurs();
   }
 
   initSearchForm() {
@@ -68,6 +76,8 @@ export class ContributeursComponent implements OnInit {
         if (response.body !== null) {
           this.totalItems = Number(response.headers.get('X-Total-Count'));
           this.contributeurs$ = of(response.body);
+          this.contributeurs = response.body;
+          console.warn("contributeurs",this.contributeurs);
         }
       },
       error: error => {
@@ -77,4 +87,41 @@ export class ContributeursComponent implements OnInit {
     });
   }
 
+  loadPage(pageNumber: number) {
+    this.page = pageNumber - 1;
+    this.getContributeurs();
+  }
+
+  async openConfirmdelete(contributeur: Utilisateur) {
+    const currentModal = this.modalService.open(ConfirmComponent, { size: 'lg', backdrop: 'static', centered: true });
+    currentModal.componentInstance.message = `Voulez-vous supprimer le contributeur #${contributeur.id} ?`;
+    await currentModal.result.then(
+      response => {
+        if (response === true) {
+          this.deleteContributeur(contributeur);
+        }
+      }
+    );
+  }
+
+  private deleteContributeur(contributeur: Utilisateur) {
+    /** A revoir supprimer le contributeur avec tous ses contributions */
+    const result = this.contributeurService.deleteContributeur(contributeur.id).subscribe(
+      () => {
+        result.unsubscribe();
+        this.notification.open('success', `Le contributeur a été supprimé avec succès !`);
+        this.getContributeurs();
+      },
+      error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la suppression de la source !`;
+        this.notification.open('danger', message);
+        result.unsubscribe();
+      }
+    );
+  }
+
+  gotoDetail(u: Utilisateur) {
+    console.warn("contributeur detail",u);
+    this.router.navigate(['pages','contributeurs','detail',u.id]);
+  }
 }

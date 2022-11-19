@@ -6,7 +6,7 @@ import {SourceService} from "../source.service";
 import {SourceDonnee} from "../../../models/sourceDonnee.model";
 import {UpdateSourceDonneeComponent} from "../update-source-donnee/update-source-donnee.component";
 import {ConfirmComponent} from "../../../common/confirm/confirm.component";
-import {FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-source-donnee',
@@ -15,16 +15,30 @@ import {FormGroup} from "@angular/forms";
 })
 export class SourceDonneeComponent implements OnInit {
   listeCategories: any[] = [];
-  sourceDonne: SourceDonnee[] = [];
+  sourcesDonnees: SourceDonnee[] = [];
   enableShowFilter: boolean;
   formSearch!: FormGroup;
+  totalItems = 0;
+  itemsPerPage = 10;
+  maxSize = 20;
+  page = 0;
+  ngbPaginationPage = 1;
+  sourceDonnee: SourceDonnee = new SourceDonnee();
 
   constructor( private modalService: NgbModal,
                private notification: NotificationService,
-               private sourceService: SourceService) { }
+               private sourceService: SourceService,
+               private fb: FormBuilder,) { }
 
   ngOnInit(): void {
-    this.getSourceDonnee();
+    this.initSearchForm();
+    this.getSourceDonneeWithCriteria();
+  }
+
+  initSearchForm() {
+    this.formSearch = this.fb.group({
+      libelle: null,
+    });
   }
 
   openModalCreate() {
@@ -33,7 +47,7 @@ export class SourceDonneeComponent implements OnInit {
       msg => {
         if (msg == true) {
           this.notification.open('success', `L'opération a été effectuée avec succès !`);
-
+          this.getSourceDonnee();
         }
       }
     );
@@ -42,7 +56,7 @@ export class SourceDonneeComponent implements OnInit {
   getSourceDonnee(): void{
     this.sourceService.getSourceDonnees().subscribe(data=>{
       if(data.body){
-        this.sourceDonne = data.body;
+        this.sourcesDonnees = data.body;
       }
     })
   }
@@ -58,7 +72,7 @@ export class SourceDonneeComponent implements OnInit {
       msg => {
         if (msg == true) {
           this.notification.open('success', `L'opération a été effectuée avec succès !`);
-
+          this.getSourceDonnee();
         }
       }
     );
@@ -96,10 +110,35 @@ export class SourceDonneeComponent implements OnInit {
   }
 
   onSearch() {
-
+    this.sourceDonnee.libelle = this.formSearch.get('libelle').value;
+    this.getSourceDonneeWithCriteria();
   }
 
   onResetSearchForm() {
 
+  }
+
+  loadPage(pageNumber: number) {
+    this.page = pageNumber - 1;
+    this.getSourceDonneeWithCriteria();
+  }
+
+  getSourceDonneeWithCriteria() {
+    const request = {
+      page: this.page,
+      size: this.itemsPerPage,
+    };
+    this.sourceService.getSourceDonneWithCriteria(this.sourceDonnee, request).subscribe({
+      next: response => {
+        if (response.body !== null) {
+          this.totalItems = Number(response.headers.get('X-Total-Count'));
+          this.sourcesDonnees = response.body;
+        }
+      },
+      error: error => {
+        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la récupération des sources de données !`;
+        this.notification.open('danger', message);
+      }
+    });
   }
 }

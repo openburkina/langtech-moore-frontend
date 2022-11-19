@@ -105,9 +105,9 @@
             <td>{{ u.pointFidelite }}</td>
             <td>
               <div class="d-flex order-actions">
-                <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2"><i
+                <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2" (click)="gotoDetail(u)"><i
                   class='bx bx-show-alt'></i></button>
-                <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3"><i
+                <button type="button" (click)="openConfirmdelete(u)" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3"><i
                   class='bx bxs-trash'></i></button>
               </div>
             </td>
@@ -117,3 +117,20 @@
       </div>
     </div>
   </div>
+<div class="d-flex">
+  <div class="mx-auto">
+    <ngb-pagination [collectionSize]="totalItems"
+                    [(page)]="ngbPaginationPage"
+                    [pageSize]="itemsPerPage"
+                    [maxSize]="maxSize"
+                    [rotate]="true"
+                    [boundaryLinks]="false"
+                    class="pagination"
+                    (pageChange)="loadPage($event)">
+
+      <ng-template ngbPaginationPrevious>Préc.</ng-template>
+      <ng-template ngbPaginationNext>Suiv.</ng-template>
+    </ngb-pagination>
+
+  </div>
+</div>

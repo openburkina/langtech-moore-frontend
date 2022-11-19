@@ -38,7 +38,7 @@
       <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
         <div class="row">
           <div class="col-12 col-md-4 mb-3">
-            <input class="form-control" type="text" placeholder="Rechercher par source donnée..." name="sourceDonnee" formControlName="sourceDonnee" id="sourceDonnee">
+            <input class="form-control" type="text" placeholder="Rechercher par source donnée..." name="sourceDonnee" formControlName="libelle" id="libelle">
           </div>
 
           <div class="col-12 col-md-4">
@@ -58,7 +58,7 @@
 <div class="card">
   <div class="card-body">
     <div class="d-lg-flex align-items-center mb-4 gap-3">
-      <div class="position-relative alert alert-warning" *ngIf="sourceDonne.length == 0">
+      <div class="position-relative alert alert-warning" *ngIf="sourcesDonnees.length == 0">
         <h6>
           Aucune source de donnée enregistrée.
           Vous pouvez ajouter de nouvelles sources de données en cliquant sur le bouton suivant
@@ -67,15 +67,12 @@
           <i class="lni lni-angle-double-right"></i>
         </h6>
       </div>
-
-      <div class="ms-auto"></div>
-      <div class="ms-auto"></div>
     </div>
     <div class="text-right">
       <button (click)="openModalCreate()" class="btn btn-primary radius-30 mt-2 mt-lg-0 mx-2"><i class="bx bxs-plus-square"></i>Ajouter source donnée excel</button>
       <button (click)="update(null)" class="btn btn-primary radius-30 mt-2 mt-lg-0 text-right"><i class="bx bxs-plus-square"></i>Ajouter une ligne de source de donnée</button>
     </div>
-    <div class="table-responsive" *ngIf="sourceDonne.length > 0">
+    <div class="table-responsive" *ngIf="sourcesDonnees.length > 0">
       <table class="table mb-0">
         <thead class="table-light">
         <tr>
@@ -85,7 +82,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of sourceDonne; let i = index">
+        <tr *ngFor="let item of sourcesDonnees; let i = index">
           <td>
             <div class="d-flex align-items-center">
               <div class="ms-2">
@@ -105,5 +102,23 @@
         </tbody>
       </table>
     </div>
+  </div>
+</div>
+
+<div class="d-flex" *ngIf="sourcesDonnees.length > 0">
+  <div class="mx-auto">
+    <ngb-pagination [collectionSize]="totalItems"
+                    [(page)]="ngbPaginationPage"
+                    [pageSize]="itemsPerPage"
+                    [maxSize]="maxSize"
+                    [rotate]="true"
+                    [boundaryLinks]="false"
+                    class="pagination"
+                    (pageChange)="loadPage($event)">
+
+      <ng-template ngbPaginationPrevious>Préc.</ng-template>
+      <ng-template ngbPaginationNext>Suiv.</ng-template>
+    </ngb-pagination>
+
   </div>
 </div>
