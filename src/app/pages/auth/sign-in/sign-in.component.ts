@@ -55,6 +55,11 @@ export class SignInComponent implements OnInit {
         result.unsubscribe();
         if (response) {
           this.onSuccessLogin(this.parameter.currentUser);
+          // if (this.parameter.currentUser.typeUtilisateur !== 'UTILISATEUR') {
+          //   this.notification.open('danger', `Désolé ! Vous n'êtes pas autorisés à acceder à l'application !`);
+          // } else {
+          //   this.onSuccessLogin(this.parameter.currentUser);
+          // }
         } else {
           this.notification.open('danger', `Une erreur est survenue lors de la connexion !`);
         }
