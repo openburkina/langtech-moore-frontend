@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {Langue} from "../../models/langue.model";
 import {Traduction} from "../../models/traduction.model";
 import {Utilisateur} from "../../models/utilisateur.model";
+import {StatistiqueCriteria} from "../../models/statistiqueCriteria";
+import {Statistique} from "../../models/statistique.model";
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +49,9 @@ export class ContributionService {
 
   public onValide(traductionId: number, statut: string): Observable<HttpResponse<Traduction>> {
     return this.http.get<Traduction>(`/api/traductions/validation/${traductionId}?etat=${statut}`, { observe: "response"});
+  }
+
+  public onGetStatistiques(statistiqueCriteria: StatistiqueCriteria): Observable<HttpResponse<Statistique[]>> {
+    return this.http.post<Statistique[]>(`/api/getStatistique`, statistiqueCriteria, { observe: "response"});
   }
 }

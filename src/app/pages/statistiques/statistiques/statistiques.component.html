@@ -50,7 +50,7 @@
               <i class='bx bx-x-circle mr-1'></i> Rénitialiser
             </button>
 
-            <button type="submit" class="btn btn-outline-success radius-30">
+            <button [disabled]="formSearch.invalid" type="submit" class="btn btn-outline-success radius-30">
               <i class='bx bx-search'></i> Rechercher
             </button>
           </div>
@@ -64,13 +64,13 @@
 <div class="card">
   <div class="card-body">
     <div class="d-lg-flex align-items-center mb-4 gap-3">
-      <div class="position-relative alert alert-warning" *ngIf="!contributeurs$">
+      <div class="position-relative alert alert-warning" *ngIf="statistiques.length === 0">
         <h6>
-          Aucune contribution enregistrée !
+          Aucune statistique trouvée !
         </h6>
       </div>
     </div>
-    <div class="table-responsive" *ngIf="contributeurs$">
+    <div class="table-responsive" *ngIf="statistiques.length !== 0">
       <table class="table mb-0">
         <thead class="table-light">
         <tr>
@@ -81,10 +81,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let u of contributeurs$ | async; index as i">
+        <tr *ngFor="let s of statistiques; index as i">
           <td>{{ i + 1 }}</td>
-          <td>{{ u.email + ' - ' + u.nom + ' ' + u.prenom + ' - ' + u.telephone }}</td>
-          <td>{{ u.pointFidelite }}</td>
+          <td>{{ s.utilisateur }}</td>
+          <td>{{ s.pointFedelite }}</td>
           <td>
             <div class="d-flex order-actions">
               <button type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
