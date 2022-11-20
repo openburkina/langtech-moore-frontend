@@ -54,4 +54,8 @@ export class ContributionService {
   public onGetStatistiques(statistiqueCriteria: StatistiqueCriteria): Observable<HttpResponse<Statistique[]>> {
     return this.http.post<Statistique[]>(`/api/getStatistique`, statistiqueCriteria, { observe: "response"});
   }
+
+  public getContributionByContributeur(id: number): Observable<HttpResponse<Traduction[]>> {
+    return this.http.get<Traduction[]>(`/api/traductions-by-contibuteur/${id}`, { observe: "response"});
+  }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Traduction} from "../../../../models/traduction.model";
 import {Utilisateur} from "../../../../models/utilisateur.model";
 import {ActivatedRoute} from "@angular/router";
-import {ContributeurService} from "../../contributeur.service";
 import {ContributionService} from "../../../contributions/contribution.service";
 import {ConfirmComponent} from "../../../../common/confirm/confirm.component";
 import {NotificationService} from "../../../../common/services/notification.service";
@@ -38,11 +37,12 @@ export class DetailContributeurComponent implements OnInit {
   }
 
   getContribution(id: number): void{
-    // this.contributionService.getContributionByContributeur(id).subscribe(data=>{
-    //   if(data.body){
-    //     this.traductions = data.body;
-    //   }
-    // })
+    this.contributionService.getContributionByContributeur(id).subscribe(data=>{
+      console.warn("this.traductions",this.traductions);
+    if(data.body){
+        this.traductions = data.body;
+      }
+    });
   }
 
   getOneTraduction(traductionId: number): void {
