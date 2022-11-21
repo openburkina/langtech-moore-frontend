@@ -87,10 +87,7 @@
           <thead class="table-light">
           <tr>
             <th>#</th>
-            <th>Nom</th>
-            <th>Prénom(s)</th>
-            <th>Téléphone</th>
-            <th>Email</th>
+            <th>Contributeur</th>
             <th>Point de fidelité</th>
             <th>Actions</th>
           </tr>
@@ -98,10 +95,7 @@
           <tbody>
           <tr *ngFor="let u of contributeurs$ | async; index as i">
             <td>{{ i + 1 }}</td>
-            <td>{{ u.nom }}</td>
-            <td>{{ u.prenom }}</td>
-            <td>{{ u.telephone }}</td>
-            <td>{{ u.email }}</td>
+            <td>{{ u.email + ' - ' + u.nom + ' ' + u.prenom + ' ' + u.telephone }}</td>
             <td>{{ u.pointFidelite }}</td>
             <td>
               <div class="d-flex order-actions">

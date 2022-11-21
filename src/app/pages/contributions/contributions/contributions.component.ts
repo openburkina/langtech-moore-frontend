@@ -155,6 +155,7 @@ export class ContributionsComponent implements OnInit {
 
   onResetSearchForm() {
     this.formSearch.reset();
+    this.onSearch();
   }
 
   loadPage(pageNumber: number) {

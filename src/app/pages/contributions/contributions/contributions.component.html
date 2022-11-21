@@ -109,6 +109,7 @@
           <th>Type de traduction</th>
           <th>Etat</th>
           <th>Langue</th>
+          <th>Contributeur</th>
           <th>Actions</th>
         </tr>
         </thead>
@@ -132,6 +133,7 @@
 
           </td>
           <td>{{ t.langue?.libelle }}</td>
+          <td>{{ t.utilisateur?.nom + ' ' + t.utilisateur?.prenom }}</td>
           <td>
             <div class="d-flex order-actions">
               <button (click)="getOneTraduction(t.id)" type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">
