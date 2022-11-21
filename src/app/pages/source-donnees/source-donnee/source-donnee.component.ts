@@ -7,6 +7,7 @@ import {SourceDonnee} from "../../../models/sourceDonnee.model";
 import {UpdateSourceDonneeComponent} from "../update-source-donnee/update-source-donnee.component";
 import {ConfirmComponent} from "../../../common/confirm/confirm.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-source-donnee',
@@ -28,7 +29,8 @@ export class SourceDonneeComponent implements OnInit {
   constructor( private modalService: NgbModal,
                private notification: NotificationService,
                private sourceService: SourceService,
-               private fb: FormBuilder,) { }
+               private fb: FormBuilder,
+               private router: Router) { }
 
   ngOnInit(): void {
     this.initSearchForm();
@@ -47,7 +49,7 @@ export class SourceDonneeComponent implements OnInit {
       msg => {
         if (msg == true) {
           this.notification.open('success', `L'opération a été effectuée avec succès !`);
-          this.getSourceDonnee();
+          this.getSourceDonneeWithCriteria();
         }
       }
     );
@@ -57,12 +59,13 @@ export class SourceDonneeComponent implements OnInit {
     this.sourceService.getSourceDonnees().subscribe(data=>{
       if(data.body){
         this.sourcesDonnees = data.body;
+        console.warn("source donnée",this.sourcesDonnees);
       }
     })
   }
 
-  openModalDetail(item: any) {
-
+  openModalDetail(srcId: number) {
+    this.router.navigate(['pages','source-donnees','detail',srcId]);
   }
 
   update(source?: SourceDonnee) {
@@ -72,7 +75,7 @@ export class SourceDonneeComponent implements OnInit {
       msg => {
         if (msg == true) {
           this.notification.open('success', `L'opération a été effectuée avec succès !`);
-          this.getSourceDonnee();
+          this.getSourceDonneeWithCriteria();
         }
       }
     );
@@ -95,7 +98,7 @@ export class SourceDonneeComponent implements OnInit {
       () => {
         result.unsubscribe();
         this.notification.open('success', `La source a été supprimée avec succès !`);
-        this.getSourceDonnee();
+        this.getSourceDonneeWithCriteria();
       },
       error => {
         const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la suppression de la source !`;
@@ -133,6 +136,7 @@ export class SourceDonneeComponent implements OnInit {
         if (response.body !== null) {
           this.totalItems = Number(response.headers.get('X-Total-Count'));
           this.sourcesDonnees = response.body;
+          console.warn("source donnée",this.sourcesDonnees);
         }
       },
       error: error => {
