@@ -120,17 +120,16 @@
           <td>{{ t.type }}</td>
           <td>
             <button *ngIf="t.etat === 'EN_ATTENTE'" type="button" class="btn btn-outline-warning btn-sm">
-              {{ t.etat }}
+              EN ATTENTE
             </button>
 
-            <button *ngIf="t.etat === 'VALIDER'" type="button" class="btn btn-outline-success btn-sm">
-              {{ t.etat }}
+            <button *ngIf="t.etat === 'VALIDER'" type="button" class="btn btn-outline-success btn-sm text-uppercase">
+              Validée
             </button>
 
-            <button *ngIf="t.etat === 'REJETER'" type="button" class="btn btn-outline-danger btn-sm">
-              {{ t.etat }}
+            <button *ngIf="t.etat === 'REJETER'" type="button" class="btn btn-outline-danger btn-sm text-uppercase">
+              Rejettée
             </button>
-
           </td>
           <td>{{ t.langue?.libelle }}</td>
           <td>{{ t.utilisateur?.nom + ' ' + t.utilisateur?.prenom }}</td>

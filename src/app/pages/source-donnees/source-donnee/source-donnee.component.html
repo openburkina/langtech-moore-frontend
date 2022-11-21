@@ -93,6 +93,7 @@
           <td>{{item.libelle}}</td>
           <td>
             <div class="d-flex order-actions">
+              <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-2" (click)="openModalDetail(item.id)"><i class='bx bx-show-alt'></i></button>
               <button type="button" class="btn btn-outline-success btn-sm radius-30 px-2 ms-3" (click)="update(item)"><i class='bx bxs-edit'></i></button>
               <button type="button" class="btn btn-outline-danger btn-sm radius-30 px-2 ms-3" (click)="openConfirmdelete(item)"><i class='bx bxs-trash'></i></button>
             </div>

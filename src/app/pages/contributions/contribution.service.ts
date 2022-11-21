@@ -61,4 +61,8 @@ export class ContributionService {
   public getContributionByContributeur(id: number): Observable<HttpResponse<Traduction[]>> {
     return this.http.get<Traduction[]>(`/api/traductions-by-contibuteur/${id}`, { observe: "response"});
   }
+
+  public getContributionBySource(id: number): Observable<HttpResponse<Traduction[]>> {
+    return this.http.get<Traduction[]>(`/api/traductions-by-source/${id}`, { observe: "response"});
+  }
 }
