@@ -58,7 +58,43 @@
   </div>
 
 </div>
+<div class="card">
+  <div class="card-body">
+    <div class="row align-items-center">
+      <div class="col-lg-12 col-xl-12 h5 text-primary">
+        Rechercher le meilleur contributeur de la periode
+      </div>
+    </div>
+    <hr/>
+    <marquee behavior="scroll" ><span style="font-weight: bold">Le meilleur contributeur du mois de Novembre est </span> <span class="text-warning" style="font-weight: bold">Franck Kabore.</span><a href="">En savoir plus</a> </marquee>
 
+    <div class="row align-items-center">
+      <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <label for="dateDebut" class="col-form-label">Date debut</label>
+            <input class="form-control" type="date" name="dateDebut" formControlName="dateDebut" id="dateDebut">
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-3 mb-3">
+            <label for="dateFin" class="col-form-label">Date fin</label>
+            <input class="form-control" type="date" name="dateFin" formControlName="dateFin" id="dateFin">
+          </div>
+          <div class="col-12 col-md-6 col-lg-3 mb-3 mt-4">
+            <button type="reset" (click)="onResetSearchForm()" class="btn btn-outline-danger radius-30 mx-3 mt-2">
+              <i class='bx bx-x-circle mr-1'></i> Rénitialiser
+            </button>
+
+            <button type="submit" class="btn btn-outline-success radius-30 mt-2">
+              <i class='bx bx-search'></i> Rechercher
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div class="row">
   <div class="col-12">
     <highcharts-chart

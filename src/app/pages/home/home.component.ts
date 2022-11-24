@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,7 @@ import * as Highcharts from 'highcharts';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  formSearch!: FormGroup;
   data1 = [
     {
       name: 'traductions en attente',
@@ -50,10 +52,25 @@ export class HomeComponent implements OnInit {
     },
     series: this.data1
   };
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     $.getScript("./assets/js/deafult-dashboard.js")
+    this.initSearchForm();
   }
 
+  onResetSearchForm() {
+
+  }
+
+  onSearch() {
+
+  }
+
+  initSearchForm() {
+    this.formSearch = this.fb.group({
+      dateDebut: null,
+      dateFin: null,
+    });
+  }
 }
