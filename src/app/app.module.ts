@@ -33,6 +33,7 @@ import {NotificationComponent} from "./common/notification/notification.componen
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgMultiSelectDropDownModule} from "ng-multiselect-dropdown";
 import { HomeComponent } from './pages/home/home.component';
+import {HighchartsChartModule} from "highcharts-angular";
 
 @NgModule({
   declarations: [
@@ -51,13 +52,14 @@ import { HomeComponent } from './pages/home/home.component';
     NgbModule,
     AppRoutingModule,
     SharedModule,
-    NgxWebstorageModule.forRoot({ prefix: 'gt', separator: '-', caseSensitive: true }),
+    NgxWebstorageModule.forRoot({prefix: 'gt', separator: '-', caseSensitive: true}),
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDKXKdHQdtqgPVl2HI2RnUa_1bjCxRCQo4'}),
     PerfectScrollbarModule,
     NgxSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
     NgMultiSelectDropDownModule.forRoot(),
+    HighchartsChartModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
   providers: [

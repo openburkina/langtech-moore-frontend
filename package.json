@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "tng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -54,7 +54,8 @@
     "smartwizard": "^5.1.1",
     "text-mask-addons": "^3.8.0",
     "tslib": "^2.1.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "highcharts": "^9.3.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.0.5",

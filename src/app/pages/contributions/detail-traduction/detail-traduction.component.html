@@ -66,7 +66,7 @@
           <i class='bx bxs-edit'></i> Valider
         </button>
 
-        <button *ngIf="traduction.etat === 'EN_ATTENTE'" type="button" (click)="onValideTraduction('REJETER')"
+        <button *ngIf="traduction.etat === 'EN_ATTENTE'" type="button" (click)="rejet('REJETER')"
                 class="btn btn-outline-danger radius-30">
           <i class='bx bxs-edit'></i> Rejeter
         </button>

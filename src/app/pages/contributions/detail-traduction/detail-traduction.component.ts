@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Traduction} from "../../../models/traduction.model";
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { saveAs } from 'file-saver';
 import {ContributionService} from "../contribution.service";
 import {NotificationService} from "../../../common/services/notification.service";
+import {ConfirmComponent} from "../../../common/confirm/confirm.component";
+import {RejetWithMotifComponent} from "../../../common/rejet-with-motif/rejet-with-motif.component";
 
 @Component({
   selector: 'app-detail-traduction',
@@ -17,6 +19,7 @@ export class DetailTraductionComponent implements OnInit {
     private activeModal: NgbActiveModal,
     private contributionService: ContributionService,
     private notification: NotificationService,
+    private modal: NgbModal
   ) { }
 
   ngOnInit(): void {
@@ -65,5 +68,17 @@ export class DetailTraductionComponent implements OnInit {
     name = name.toLocaleLowerCase();
     name = name.replace(' ', '_');
     return name;
+  }
+
+  async rejet(statut: string) {
+    const currentModal = await this.modal.open(RejetWithMotifComponent, { size: "lg", backdrop: "static", centered: true});
+    currentModal.componentInstance.message = `Voulez-vous rejeter cette traduction ?`;
+    currentModal.result.then(
+      response => {
+        if (response) {
+          this.onValideTraduction(statut)
+        }
+      }
+    );
   }
 }

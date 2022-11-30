@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="card-header bg-primary border-bottom-red text-center text-white">
+    Confirmation
+  </div>
+
+  <div class="card-body">
+    <div class="text-center text-main-color-green mb-3">
+      {{ message }}
+    </div>
+      <div class="row">
+        <div class="mb-3">
+          <label for="motif" class="col-form-label text-primary">Motif</label>
+          <textarea class="form-control" id="motif" name="motif" ></textarea>
+        </div>
+      </div>
+
+      <div class="form-group text-center">
+        <button type="button" class="btn btn-outline-danger mx-3" (click)="onDismiss(false)">
+          <i class='bx bx-x-circle mr-1'></i> Annuler
+        </button>
+
+        <button type="submit" class="btn btn-outline-success" (click)="onDismiss(true)">
+          <i class='bx bx-check-square'></i> Confirmer
+        </button>
+      </div>
+
+
+  </div>
+</div>
