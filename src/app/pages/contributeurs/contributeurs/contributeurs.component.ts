@@ -62,7 +62,7 @@ export class ContributeursComponent implements OnInit {
     this.contributeur.prenom = this.formSearch.get('prenom').value;
     this.contributeur.email = this.formSearch.get('email').value;
     this.contributeur.telephone = this.formSearch.get('telephone').value;
-    this.contributeur.typeUtilisateur = 'CONTRIBUTrrEUR';
+    this.contributeur.typeUtilisateur = 'CONTRIBUTEUR';
     this.getContributeurs();
 
   }
