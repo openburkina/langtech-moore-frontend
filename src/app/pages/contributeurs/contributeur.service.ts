@@ -40,4 +40,11 @@ export class ContributeurService {
     return this.http.delete<any>(`/api/utilisateurs/${contriId}`, { observe: 'response' });
   }
 
+ public getBestContributeur(dateDebut: Date, dateFin): Observable<Utilisateur> {
+   let params = new HttpParams();
+   params = params.append("debut",dateDebut.toDateString());
+   params = params.append("fin",dateFin.toDateString());
+   return this.http.post<Utilisateur>(`/api/traductions/best-contributor`,{params:params});
+ }
+
 }

@@ -3,6 +3,7 @@ import * as Highcharts from 'highcharts';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ContributionService} from "../contributions/contribution.service";
 import {StateMois} from "../../models/stateMois.model";
+import {ContributeurService} from "../contributeurs/contributeur.service";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +23,8 @@ export class HomeComponent implements OnInit {
 
   donneesState: StateMois[] = [];
   constructor(private fb: FormBuilder,
-              private contributionService: ContributionService) { }
+              private contributionService: ContributionService,
+              private contributeurService: ContributeurService) { }
 
   ngOnInit(): void {
     $.getScript("./assets/js/deafult-dashboard.js");
@@ -35,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSearch() {
-
+    this.getBestContributeur();
   }
 
   initSearchForm() {
@@ -108,5 +110,12 @@ export class HomeComponent implements OnInit {
     };
   }
 
+  getBestContributeur(): void{
+    this.contributeurService.getBestContributeur(new Date(),new Date()).subscribe(data=>{
+      if(data){
+        console.warn("contrib",data);
+      }
+    })
+  }
 
 }
