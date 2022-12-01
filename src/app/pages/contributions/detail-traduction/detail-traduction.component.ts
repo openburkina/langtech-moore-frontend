@@ -4,8 +4,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import { saveAs } from 'file-saver';
 import {ContributionService} from "../contribution.service";
 import {NotificationService} from "../../../common/services/notification.service";
-import {ConfirmComponent} from "../../../common/confirm/confirm.component";
-import {RejetWithMotifComponent} from "../../../common/rejet-with-motif/rejet-with-motif.component";
+import {RejetWithMotifComponent} from "../rejet-with-motif/rejet-with-motif.component";
 
 @Component({
   selector: 'app-detail-traduction',
@@ -30,7 +29,8 @@ export class DetailTraductionComponent implements OnInit {
   }
 
   onValideTraduction(statut: string) {
-    this.contributionService.onValide(this.traduction.id, statut).subscribe(
+    this.traduction.etat = statut;
+    this.contributionService.onValide(this.traduction).subscribe(
       {
         next: response => {
           console.log(response.body);
@@ -75,7 +75,8 @@ export class DetailTraductionComponent implements OnInit {
     currentModal.componentInstance.message = `Voulez-vous rejeter cette traduction ?`;
     currentModal.result.then(
       response => {
-        if (response) {
+        if (response.param == true) {
+          this.traduction.motif = response.motif;
           this.onValideTraduction(statut)
         }
       }

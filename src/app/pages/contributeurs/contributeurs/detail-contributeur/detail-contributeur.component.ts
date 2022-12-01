@@ -72,6 +72,7 @@ export class DetailContributeurComponent implements OnInit {
       }
     );
   }
+
   deleteTraduction(t: Traduction): void {
     this.contributionService.delete(t.id).subscribe({
       next: () => {

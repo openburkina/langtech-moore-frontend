@@ -7,12 +7,14 @@ import { DetailTraductionComponent } from './detail-traduction/detail-traduction
 import {ReactiveFormsModule} from "@angular/forms";
 import {NgbPaginationModule} from "@ng-bootstrap/ng-bootstrap";
 import {AngMusicPlayerModule} from "ang-music-player";
+import {RejetWithMotifComponent} from "./rejet-with-motif/rejet-with-motif.component";
 
 
 @NgModule({
   declarations: [
     ContributionsComponent,
-    DetailTraductionComponent
+    DetailTraductionComponent,
+    RejetWithMotifComponent,
   ],
     imports: [
         CommonModule,
