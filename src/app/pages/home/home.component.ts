@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ContributionService} from "../contributions/contribution.service";
+import {StateMois} from "../../models/stateMois.model";
+import {ContributeurService} from "../contributeurs/contributeur.service";
 
 @Component({
   selector: 'app-home',
@@ -9,53 +12,23 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class HomeComponent implements OnInit {
   formSearch!: FormGroup;
-  data1 = [
-    {
-      name: 'traductions en attente',
-      data: [500, 700, 555, 444, 777, 877, 944, 567, 666, 789, 456, 654]
+  traductionAttentes: number[] = [];
+  traductionRejetees: number[] = [];
+  traductionValidees: number[] = [];
 
-    },
-    {
-      name: 'traductions rejetés',
-      data: [677, 455, 677, 877, 455, 778, 888, 567, 785, 488, 567, 654]
-
-    },
-    {
-      name: 'traductions acceptés',
-      data: [677, 455, 677, 877, 455, 778, 888, 567, 785, 488, 567, 654]
-
-    },
-  ];
+  data1: any[];
   highcharts = Highcharts;
-  chartOptions = {
-    chart: {
-      // type: "bar",
-      type: 'column',
-      column: {
-        pointPadding: 0,
-        borderWidth: 0,
-        groupPadding: 0,
-        shadow: false
-      }
-    },
+  chartOptions: any;
 
-    title: {
-      text: "Evolution des contributions par mois"
-    },
-    yAxis: {
-      title: {
-        text: "contributions"
-      }
-    },
-    xAxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    },
-    series: this.data1
-  };
-  constructor(private fb: FormBuilder) { }
+
+  donneesState: StateMois[] = [];
+  constructor(private fb: FormBuilder,
+              private contributionService: ContributionService,
+              private contributeurService: ContributeurService) { }
 
   ngOnInit(): void {
-    $.getScript("./assets/js/deafult-dashboard.js")
+    $.getScript("./assets/js/deafult-dashboard.js");
+    this.getSatistique();
     this.initSearchForm();
   }
 
@@ -64,7 +37,7 @@ export class HomeComponent implements OnInit {
   }
 
   onSearch() {
-
+    this.getBestContributeur();
   }
 
   initSearchForm() {
@@ -73,4 +46,76 @@ export class HomeComponent implements OnInit {
       dateFin: null,
     });
   }
+
+  getSatistique(){
+    this.contributionService.getStatistique().subscribe(data=>{
+      if(data.body){
+        this.donneesState = data.body;
+        this.donneesState.forEach(item=>{
+        })
+        this.donneesState.forEach((currentValue, index) => {
+         this.traductionAttentes.push(currentValue.nombreContributionEnattente);
+         this.traductionValidees.push(currentValue.nombreContributionValide);
+         this.traductionRejetees.push(currentValue.nombreContributionRejette);
+        });
+        this.intialiser();
+        console.warn("this.donneesState ",this.traductionAttentes);
+      }
+    })
+  }
+
+  intialiser(): void{
+    this.data1 = [
+      {
+        name: 'traductions en attente',
+        data: this.traductionAttentes
+
+      },
+      {
+        name: 'traductions rejetés',
+        data: this.traductionRejetees
+
+      },
+      {
+        name: 'traductions acceptés',
+        data: this.traductionValidees
+
+      },
+    ];
+
+    this.chartOptions = {
+      chart: {
+        // type: "bar",
+        type: 'column',
+        column: {
+          pointPadding: 0,
+          borderWidth: 0,
+          groupPadding: 0,
+          shadow: false
+        }
+      },
+
+      title: {
+        text: "Evolution des contributions par mois"
+      },
+      yAxis: {
+        title: {
+          text: "contributions"
+        }
+      },
+      xAxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      },
+      series: this.data1
+    };
+  }
+
+  getBestContributeur(): void{
+    this.contributeurService.getBestContributeur(new Date(),new Date()).subscribe(data=>{
+      if(data){
+        console.warn("contrib",data);
+      }
+    })
+  }
+
 }
