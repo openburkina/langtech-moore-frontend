@@ -6,6 +6,7 @@ import {Traduction} from "../../models/traduction.model";
 import {Utilisateur} from "../../models/utilisateur.model";
 import {StatistiqueCriteria} from "../../models/statistiqueCriteria";
 import {Statistique} from "../../models/statistique.model";
+import {StateMois} from "../../models/stateMois.model";
 
 @Injectable({
   providedIn: 'root'
@@ -64,5 +65,9 @@ export class ContributionService {
 
   public getContributionBySource(id: number): Observable<HttpResponse<Traduction[]>> {
     return this.http.get<Traduction[]>(`/api/traductions-by-source/${id}`, { observe: "response"});
+  }
+
+  public getStatistique(): Observable<HttpResponse<StateMois[]>> {
+    return this.http.get<StateMois[]>(`/api/traductions-get-info-stats-mois`, { observe: "response"});
   }
 }
