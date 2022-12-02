@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
 import {Utilisateur} from "../../models/utilisateur.model";
 import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
+import {StatistiqueCriteria} from "../../models/statistiqueCriteria";
+import {Statistique} from "../../models/statistique.model";
+import {DateDto} from "../../models/dateDto";
 
 @Injectable({
   providedIn: 'root'
@@ -40,11 +43,8 @@ export class ContributeurService {
     return this.http.delete<any>(`/api/utilisateurs/${contriId}`, { observe: 'response' });
   }
 
- public getBestContributeur(dateDebut: Date, dateFin): Observable<Utilisateur> {
-   let params = new HttpParams();
-   params = params.append("debut",dateDebut.toDateString());
-   params = params.append("fin",dateFin.toDateString());
-   return this.http.post<Utilisateur>(`/api/traductions/best-contributor`,{params:params});
- }
+  public getBestContributor(dateDto: DateDto): Observable<HttpResponse<Utilisateur>> {
+    return this.http.post<Utilisateur>(`/api/traductions/best-contributor`, dateDto, { observe: "response"});
+  }
 
 }

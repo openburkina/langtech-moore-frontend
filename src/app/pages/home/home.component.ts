@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {ContributionService} from "../contributions/contribution.service";
 import {StateMois} from "../../models/stateMois.model";
 import {ContributeurService} from "../contributeurs/contributeur.service";
+import {DateDto} from "../../models/dateDto";
 
 @Component({
   selector: 'app-home',
@@ -111,9 +112,12 @@ export class HomeComponent implements OnInit {
   }
 
   getBestContributeur(): void{
-    this.contributeurService.getBestContributeur(new Date(),new Date()).subscribe(data=>{
-      if(data){
-        console.warn("contrib",data);
+    const dateDto = new DateDto();
+    dateDto.debut = new Date();
+    dateDto.fin = new Date();
+    this.contributeurService.getBestContributor(dateDto).subscribe(data=>{
+      if(data.body){
+        console.warn("contrib",data.body);
       }
     })
   }
