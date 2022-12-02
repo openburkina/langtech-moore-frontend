@@ -60,9 +60,9 @@
             <label for="etat" class="col-form-label">Statut de la traduction</label>
             <select class="form-control" name="etat" formControlName="etat" id="etat">
               <option [ngValue]="null" selected disabled>--Sélectionner le statut--</option>
-              <option [ngValue]="'EN_ATTENTE'">EN ATTENTE</option>
-              <option [ngValue]="'VALIDER'">VALIDER</option>
-              <option [ngValue]="'REJETER'">REJETER</option>
+              <option [ngValue]="'EN_ATTENTE'">En attente</option>
+              <option [ngValue]="'VALIDER'">Validée</option>
+              <option [ngValue]="'REJETER'">Rejettée</option>
             </select>
           </div>
 
@@ -120,7 +120,7 @@
           <td>{{ t.type }}</td>
           <td>
             <button *ngIf="t.etat === 'EN_ATTENTE'" type="button" class="btn btn-outline-warning btn-sm">
-              EN ATTENTE
+              En attente
             </button>
 
             <button *ngIf="t.etat === 'VALIDER'" type="button" class="btn btn-outline-success btn-sm text-uppercase">
