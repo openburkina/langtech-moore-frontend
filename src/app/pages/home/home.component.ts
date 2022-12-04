@@ -113,8 +113,9 @@ export class HomeComponent implements OnInit {
 
   getBestContributeur(): void{
     const dateDto = new DateDto();
-    dateDto.debut = new Date();
-    dateDto.fin = new Date();
+    dateDto.debut = new Date(this.formSearch.get('dateDebut').value);
+    dateDto.fin = new Date(this.formSearch.get('dateFin').value);
+    console.warn("data date",dateDto);
     this.contributeurService.getBestContributor(dateDto).subscribe(data=>{
       if(data.body){
         console.warn("contrib",data.body);
