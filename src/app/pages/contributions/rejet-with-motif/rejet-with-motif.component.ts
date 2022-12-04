@@ -10,17 +10,23 @@ import {FormBuilder} from "@angular/forms";
 export class RejetWithMotifComponent implements OnInit {
   @Input() message: string;
 
-  motif: any;
-  constructor(private activeModal: NgbActiveModal) { }
+  motif: string;
+  formMotif = this.fb.group({
+    motif: null,
+  });
+
+  constructor(
+    private activeModal: NgbActiveModal,
+    private fb: FormBuilder,
+  ) { }
 
   ngOnInit(): void {
   }
 
   onDismiss(param: boolean) {
-    this.activeModal.close(param);
-  }
-
-  getSourceInfo() {
-
+    this.activeModal.close({
+      'param': param,
+      'motif': this.formMotif.value.motif,
+    });
   }
 }

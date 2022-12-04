@@ -12,6 +12,8 @@ export class Traduction {
     public type?: string,
     public note?: number,
     public etat?: string,
+    public motif?: string,
+    public mois?: string,
     public utilisateur?: Utilisateur,
     public sourceDonnee?: SourceDonnee,
     public langue?: Langue,

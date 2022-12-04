@@ -92,6 +92,7 @@ export class ContributionsComponent implements OnInit {
   getOneTraduction(traductionId: number): void {
     this.contributionService.getOne(traductionId).subscribe({
       next: response => {
+        console.log(response.body);
         if (response.body) {
           this.onShowDetailTraduction(response.body);
         } else {

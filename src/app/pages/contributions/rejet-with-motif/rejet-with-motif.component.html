@@ -1,17 +1,12 @@
 <div class="card">
   <div class="card-header bg-primary border-bottom-red text-center text-white">
-    Confirmation
+    Veuillez saisir un motif du rejet !
   </div>
 
   <div class="card-body">
-    <div class="text-center text-main-color-green mb-3">
-      {{ message }}
-    </div>
-      <div class="row">
-        <div class="mb-3">
-          <label for="motif" class="col-form-label text-primary">Motif</label>
-          <textarea class="form-control" id="motif" name="motif" ></textarea>
-        </div>
+    <form [formGroup]="formMotif" (ngSubmit)="onDismiss(true)">
+      <div class="mb-3">
+        <textarea class="form-control" id="motif" name="motif" formControlName="motif" placeholder="Motif du rejet..."></textarea>
       </div>
 
       <div class="form-group text-center">
@@ -19,11 +14,10 @@
           <i class='bx bx-x-circle mr-1'></i> Annuler
         </button>
 
-        <button type="submit" class="btn btn-outline-success" (click)="onDismiss(true)">
+        <button type="submit" class="btn btn-outline-success">
           <i class='bx bx-check-square'></i> Confirmer
         </button>
       </div>
-
-
+    </form>
   </div>
 </div>

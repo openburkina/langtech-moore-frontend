@@ -48,11 +48,11 @@ export class ContributionService {
     return this.http.get<Traduction>(`/api/document/traduction?traductionId=${traductionId}`, { observe: "response"});
   }
 
-  public onValide(traductionId: number, statut: string): Observable<HttpResponse<Traduction>> {
-    const t: Traduction = new Traduction();
-    t.id = traductionId;
-    t.etat = statut;
-    return this.http.post<Traduction>(`/api/traductions/validation`, t, { observe: "response"});
+  public onValide(traduction: Traduction): Observable<HttpResponse<Traduction>> {
+    // const t: Traduction = new Traduction();
+    // t.id = traductionId;
+    // t.etat = statut;
+    return this.http.post<Traduction>(`/api/traductions/validation`, traduction, { observe: "response"});
   }
 
   public onGetStatistiques(statistiqueCriteria: StatistiqueCriteria): Observable<HttpResponse<Statistique[]>> {
