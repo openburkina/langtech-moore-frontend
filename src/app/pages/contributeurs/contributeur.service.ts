@@ -48,7 +48,7 @@ export class ContributeurService {
   }
 
   public getNbreContributor(): Observable<HttpResponse<number>> {
-    return this.http.get<number>(`/api/traductions/count-contributor`, { observe: "response"});
+    return this.http.get<number>(`/api/utilisateurs/count-contributor`, { observe: "response"});
   }
 
 
