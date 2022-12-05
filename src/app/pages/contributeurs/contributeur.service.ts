@@ -47,4 +47,10 @@ export class ContributeurService {
     return this.http.post<Utilisateur>(`/api/traductions/best-contributor`, dateDto, { observe: "response"});
   }
 
+  public getNbreContributor(): Observable<HttpResponse<number>> {
+    return this.http.get<number>(`/api/traductions/count-contributor`, { observe: "response"});
+  }
+
+
+
 }

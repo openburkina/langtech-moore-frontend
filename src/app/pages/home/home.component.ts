@@ -5,6 +5,7 @@ import {ContributionService} from "../contributions/contribution.service";
 import {StateMois} from "../../models/stateMois.model";
 import {ContributeurService} from "../contributeurs/contributeur.service";
 import {DateDto} from "../../models/dateDto";
+import {SourceService} from "../source-donnees/source.service";
 
 @Component({
   selector: 'app-home',
@@ -23,12 +24,19 @@ export class HomeComponent implements OnInit {
 
 
   donneesState: StateMois[] = [];
+   nbreTraduit = 0;
+  nbreSourceDonne = 0;
+  nbreContributor = 0;
   constructor(private fb: FormBuilder,
               private contributionService: ContributionService,
-              private contributeurService: ContributeurService) { }
+              private contributeurService: ContributeurService,
+              private sourceService: SourceService) { }
 
   ngOnInit(): void {
     $.getScript("./assets/js/deafult-dashboard.js");
+    this.getNbreContributor();
+    this.getNbreSourceDonnee();
+    this.getNbreSourceTranslated();
     this.getSatistique();
     this.initSearchForm();
   }
@@ -119,6 +127,31 @@ export class HomeComponent implements OnInit {
     this.contributeurService.getBestContributor(dateDto).subscribe(data=>{
       if(data.body){
         console.warn("contrib",data.body);
+      }
+    })
+  }
+
+  getNbreSourceTranslated(): void{
+    this.contributionService.getNbreSourceTranslated().subscribe(data=>{
+      if(data.body){
+        this.nbreTraduit = data.body;
+        console.warn("nbre traduit", this.nbreTraduit);
+      }
+    })
+  }
+
+  getNbreSourceDonnee(): void{
+    this.sourceService.getNbreSourceDonnee().subscribe(data=>{
+      if(data.body){
+        this.nbreSourceDonne = data.body
+      }
+    })
+  }
+
+  getNbreContributor(): void{
+    this.contributeurService.getNbreContributor().subscribe(data=>{
+      if(data.body){
+        this.nbreContributor = data.body;
       }
     })
   }

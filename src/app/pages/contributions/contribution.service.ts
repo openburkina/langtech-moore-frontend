@@ -70,4 +70,8 @@ export class ContributionService {
   public getStatistique(): Observable<HttpResponse<StateMois[]>> {
     return this.http.get<StateMois[]>(`/api/traductions-get-info-stats-mois`, { observe: "response"});
   }
+
+  public getNbreSourceTranslated(): Observable<HttpResponse<number>> {
+    return this.http.get<number>(`/api/traductions/count-translated`, { observe: "response"});
+  }
 }

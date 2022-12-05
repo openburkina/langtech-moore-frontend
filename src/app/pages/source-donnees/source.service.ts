@@ -59,4 +59,8 @@ export class SourceService {
     return this.http.post<Langue[]>(`/api/source-donnees/criteria`, sourceDonnee, { params: options, observe: 'response' });
   }
 
+  public getNbreSourceDonnee(): Observable<HttpResponse<number>> {
+    return this.http.get<number>(`/api/source-donnees/count`, { observe: 'response' });
+  }
+
 }
