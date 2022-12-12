@@ -66,21 +66,23 @@
       </div>
     </div>
     <hr/>
-    <marquee behavior="scroll" ><span style="font-weight: bold">Le meilleur contributeur du mois de Novembre est </span> <span class="text-warning" style="font-weight: bold">Franck Kabore.</span><a href="">En savoir plus</a> </marquee>
+<!--
+    <marquee behavior="scroll" ><span style="font-weight: bold">Le meilleur contributeur est </span> <span class="text-warning" style="font-weight: bold">{{bestContributeur.nom +' '+bestContributeur.prenom}}.</span><a href="">En savoir plus</a> </marquee>
+-->
 
     <div class="row align-items-center">
       <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
         <div class="row">
-          <div class="col-12 col-md-6 col-lg-3 mb-3">
+          <div class="col-md-3 mb-3">
             <label for="dateDebut" class="col-form-label">Date debut</label>
             <input class="form-control" type="date" name="dateDebut" formControlName="dateDebut" id="dateDebut">
           </div>
 
-          <div class="col-12 col-md-6 col-lg-3 mb-3">
+          <div class="col-md-3 mb-3">
             <label for="dateFin" class="col-form-label">Date fin</label>
             <input class="form-control" type="date" name="dateFin" formControlName="dateFin" id="dateFin">
           </div>
-          <div class="col-12 col-md-6 col-lg-3 mb-3 mt-4">
+          <div class="col-md-6 mb-3 mt-4">
             <button type="reset" (click)="onResetSearchForm()" class="btn btn-outline-danger radius-30 mx-3 mt-2">
               <i class='bx bx-x-circle mr-1'></i> Rénitialiser
             </button>
@@ -89,9 +91,30 @@
               <i class='bx bx-search'></i> Rechercher
             </button>
           </div>
-
         </div>
       </form>
+    </div>
+    <div class="table-responsive" *ngIf="bestContributeur.id">
+      <table class="table mb-0">
+        <thead class="table-light">
+        <tr>
+          <th>Nom</th>
+          <th>prenom</th>
+          <th>email</th>
+          <th>contact</th>
+          <th>Point de fidelité</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>{{bestContributeur.nom}}</td>
+          <td>{{bestContributeur.prenom}}</td>
+          <td>{{bestContributeur.email}}</td>
+          <td>{{bestContributeur.telephone}}</td>
+          <td>{{bestContributeur.pointFidelite}}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

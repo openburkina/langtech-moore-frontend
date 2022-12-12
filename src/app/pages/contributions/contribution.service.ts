@@ -74,4 +74,14 @@ export class ContributionService {
   public getNbreSourceTranslated(): Observable<HttpResponse<number>> {
     return this.http.get<number>(`/api/traductions/count-translated`, { observe: "response"});
   }
+
+  public getTraductionsPerso(traduction: Traduction, req: any): Observable<HttpResponse<Traduction[]>> {
+    let options: HttpParams = new HttpParams();
+    Object.keys(req).forEach(
+      key => {
+        options = options.set(key, req[key]);
+      }
+    );
+    return this.http.post<Langue[]>(`/api/traductions/count/criteria`, traduction, { params: options, observe: 'response' });
+  }
 }

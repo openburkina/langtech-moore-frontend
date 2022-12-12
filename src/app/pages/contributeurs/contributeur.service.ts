@@ -51,6 +51,8 @@ export class ContributeurService {
     return this.http.get<number>(`/api/utilisateurs/count-contributor`, { observe: "response"});
   }
 
-
+  public getContributor(id:number): Observable<HttpResponse<Utilisateur>> {
+    return this.http.get<Utilisateur>(`/api/utilisateurs/${id}`, { observe: "response"});
+  }
 
 }

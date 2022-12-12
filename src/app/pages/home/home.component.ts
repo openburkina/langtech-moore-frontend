@@ -6,6 +6,7 @@ import {StateMois} from "../../models/stateMois.model";
 import {ContributeurService} from "../contributeurs/contributeur.service";
 import {DateDto} from "../../models/dateDto";
 import {SourceService} from "../source-donnees/source.service";
+import {Utilisateur} from "../../models/utilisateur.model";
 
 @Component({
   selector: 'app-home',
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
    nbreTraduit = 0;
   nbreSourceDonne = 0;
   nbreContributor = 0;
+  bestContributeur: Utilisateur = new Utilisateur();
   constructor(private fb: FormBuilder,
               private contributionService: ContributionService,
               private contributeurService: ContributeurService,
@@ -81,12 +83,12 @@ export class HomeComponent implements OnInit {
 
       },
       {
-        name: 'traductions rejetés',
+        name: 'traductions rejetées',
         data: this.traductionRejetees
 
       },
       {
-        name: 'traductions acceptés',
+        name: 'traductions acceptées',
         data: this.traductionValidees
 
       },
@@ -126,7 +128,9 @@ export class HomeComponent implements OnInit {
     console.warn("data date",dateDto);
     this.contributeurService.getBestContributor(dateDto).subscribe(data=>{
       if(data.body){
-        console.warn("contrib",data.body);
+
+        this.bestContributeur = data.body[0];
+        console.warn("contrib",this.bestContributeur);
       }
     })
   }
