@@ -24,7 +24,17 @@
     <div class="row align-items-center">
       <form [formGroup]="formSearch" (ngSubmit)="onSearch()">
         <div class="row">
-          <div class="col-12 col-md-4 mb-3">
+          <div class="col-12 col-md-3 mb-3">
+            <label for="contributeurId" class="col-form-label">Contributeur</label>
+            <select class="form-control" name="contributeurId" formControlName="contributeurId" id="contributeurId">
+              <option [ngValue]="null" selected disabled>--Sélectionner le contributeur--</option>
+              <option *ngFor="let c of contributeurs$ | async" [ngValue]="c.id">
+                {{ c.nom + ' ' + c.prenom + ' ' + c.email }}
+              </option>
+
+            </select>
+          </div>
+          <div class="col-12 col-md-3 mb-3">
             <label for="typeTraduction" class="col-form-label">Type de traduction</label>
             <select class="form-control" id="typeTraduction" formControlName="typeTraduction" name="typeTraduction">
               <option [ngValue]="null" selected disabled>--Sélectionner le type de traduction--</option>
@@ -33,13 +43,13 @@
             </select>
           </div>
 
-          <div class="col-12 col-md-4 mb-3">
+          <div class="col-12 col-md-3 mb-3">
             <label for="startDate" class="col-form-label">Date de début</label>
             <input class="form-control" type="date" name="startDate" formControlName="startDate"
                    id="startDate">
           </div>
 
-          <div class="col-12 col-md-4 mb-3">
+          <div class="col-12 col-md-3 mb-3">
             <label for="endDate" class="col-form-label">Date de fin</label>
             <input class="form-control" type="date" name="endDate" formControlName="endDate"
                    id="endDate">

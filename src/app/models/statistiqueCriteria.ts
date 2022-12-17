@@ -4,6 +4,7 @@ export class StatistiqueCriteria {
     public etat?: string,
     public debut?: string,
     public fin?: string,
+    public contributeurId?: number,
 
   ) {
   }
