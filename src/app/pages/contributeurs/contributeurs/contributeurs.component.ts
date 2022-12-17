@@ -37,7 +37,7 @@ export class ContributeursComponent implements OnInit {
     this.initSearchForm();
     // this.contributeurs$ = this.contributeurService.contributeurs$;
 
-    this.getContributeurs();
+    this.onSearch();
   }
 
   initSearchForm() {

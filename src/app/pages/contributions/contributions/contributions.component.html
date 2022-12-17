@@ -45,7 +45,7 @@
             <select class="form-control" name="contributeurId" formControlName="contributeurId" id="contributeurId">
               <option [ngValue]="null" selected disabled>--Sélectionner le contributeur--</option>
               <option *ngFor="let c of contributeurs$ | async" [ngValue]="c.id">
-                {{ c.nom + ' ' + c.prenom + ' ' + c.email }}
+                {{ c.telephone + ' - ' + c.nom + ' ' + c.prenom }}
               </option>
 
             </select>
@@ -132,7 +132,7 @@
             </button>
           </td>
           <td>{{ t.langue?.libelle }}</td>
-          <td>{{ t.utilisateur?.nom + ' ' + t.utilisateur?.prenom }}</td>
+          <td>{{ t.utilisateur?.telephone + ' - ' + t.utilisateur?.nom + ' ' + t.utilisateur?.prenom }}</td>
           <td>
             <div class="d-flex order-actions">
               <button (click)="getOneTraduction(t.id)" type="button" class="btn btn-outline-warning btn-sm radius-30 px-2">

@@ -95,7 +95,7 @@
           <tbody>
           <tr *ngFor="let u of contributeurs$ | async; index as i">
             <td>{{ i + 1 }}</td>
-            <td>{{ u.email + ' - ' + u.nom + ' ' + u.prenom + ' ' + u.telephone }}</td>
+            <td>{{ u.telephone + ' - ' + u.nom + ' ' + u.prenom + ' ' + u.telephone }}</td>
             <td>{{ u.pointFidelite }}</td>
             <td>
               <div class="d-flex order-actions">

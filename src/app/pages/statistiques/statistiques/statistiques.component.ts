@@ -63,7 +63,12 @@ export class StatistiquesComponent implements OnInit {
         next: response => {
           console.log(response);
           if (response.body) {
-            this.statistiques = response.body;
+            this.statistiques = response.body.sort( (state1, state2) => {
+              if (state1.pointFedelite > state2.pointFedelite) {
+                return -1;
+              }
+              return 0;
+            });
           } else {
             this.notification.open('warning', `Aucune statistique trouvée !`);
           }
