@@ -28,9 +28,6 @@ export class StatistiquesComponent implements OnInit {
 
   ngOnInit(): void {
     const currentDate =  new Date();
-    console.log(currentDate.toLocaleString());
-    console.log(currentDate.toDateString());
-    console.log(currentDate.toISOString());
     this.contributeurs$ = this.contributeurService.contributeurs$;
     this.statistiqueCriteria = new StatistiqueCriteria();
     this.initSearchForm();
@@ -39,6 +36,7 @@ export class StatistiquesComponent implements OnInit {
   initSearchForm() {
     this.formSearch = this.fb.group({
       typeTraduction: [null, [Validators.required]],
+      contributeurId: [],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
     });
@@ -52,6 +50,7 @@ export class StatistiquesComponent implements OnInit {
     this.statistiqueCriteria.typeTraduction = this.formSearch.value.typeTraduction;
     this.statistiqueCriteria.debut = new Date(this.formSearch.value.startDate).toISOString();
     this.statistiqueCriteria.fin = new Date(this.formSearch.value.endDate).toISOString();
+    this.statistiqueCriteria.contributeurId = this.formSearch.value.contributeurId;
     console.log(this.statistiqueCriteria);
     this.getStatistiques();
   }

@@ -94,7 +94,7 @@
         </div>
       </form>
     </div>
-    <div class="table-responsive" *ngIf="bestContributeur.id">
+    <div class="table-responsive" *ngIf="bestContributeurs.length > 0">
       <table class="table mb-0">
         <thead class="table-light">
         <tr>
@@ -106,7 +106,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr *ngFor="let bestContributeur of bestContributeurs">
           <td>{{bestContributeur.nom}}</td>
           <td>{{bestContributeur.prenom}}</td>
           <td>{{bestContributeur.email}}</td>

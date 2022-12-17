@@ -43,8 +43,8 @@ export class ContributeurService {
     return this.http.delete<any>(`/api/utilisateurs/${contriId}`, { observe: 'response' });
   }
 
-  public getBestContributor(dateDto: DateDto): Observable<HttpResponse<Utilisateur>> {
-    return this.http.post<Utilisateur>(`/api/traductions/best-contributor`, dateDto, { observe: "response"});
+  public getBestContributor(dateDto: DateDto): Observable<HttpResponse<Utilisateur[]>> {
+    return this.http.post<Utilisateur[]>(`/api/traductions/best-contributor`, dateDto, { observe: "response"});
   }
 
   public getNbreContributor(): Observable<HttpResponse<number>> {

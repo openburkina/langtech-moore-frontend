@@ -170,7 +170,7 @@ export class DetailContributeurComponent implements OnInit {
   }
 
   getCountContribution():void{
-    this.traductionCounter.utilisateur.id =  this.accountService.getCurrentUserInfos().id;
+    this.traductionCounter.utilisateur.id =  this.contribId;
     const request = {
       page: this.page,
       size: this.itemsPerPage,
