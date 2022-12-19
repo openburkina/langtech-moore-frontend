@@ -29,6 +29,7 @@ export class HomeComponent implements OnInit {
   nbreSourceDonne = 0;
   nbreContributor = 0;
   bestContributeurs: Utilisateur[] = [];
+  pointFidelite = 0
   constructor(private fb: FormBuilder,
               private contributionService: ContributionService,
               private contributeurService: ContributeurService,
@@ -128,8 +129,9 @@ export class HomeComponent implements OnInit {
     console.warn("data date",dateDto);
     this.contributeurService.getBestContributor(dateDto).subscribe(data=>{
       if(data.body){
-
-        this.bestContributeurs = data.body;
+        console.warn("bestContributeurs",data.body);
+        this.bestContributeurs = data.body.utilisateurs;
+        this.pointFidelite = data.body.pointFidelite;
       }
     })
   }
