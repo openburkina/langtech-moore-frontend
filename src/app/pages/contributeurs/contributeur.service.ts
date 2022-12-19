@@ -5,6 +5,7 @@ import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {StatistiqueCriteria} from "../../models/statistiqueCriteria";
 import {Statistique} from "../../models/statistique.model";
 import {DateDto} from "../../models/dateDto";
+import {BestContributorDto} from "../../models/bestContributorDto";
 
 @Injectable({
   providedIn: 'root'
@@ -43,8 +44,8 @@ export class ContributeurService {
     return this.http.delete<any>(`/api/utilisateurs/${contriId}`, { observe: 'response' });
   }
 
-  public getBestContributor(dateDto: DateDto): Observable<HttpResponse<Utilisateur[]>> {
-    return this.http.post<Utilisateur[]>(`/api/traductions/best-contributor`, dateDto, { observe: "response"});
+  public getBestContributor(dateDto: DateDto): Observable<HttpResponse<BestContributorDto>> {
+    return this.http.post<BestContributorDto>(`/api/traductions/best-contributor`, dateDto, { observe: "response"});
   }
 
   public getNbreContributor(): Observable<HttpResponse<number>> {

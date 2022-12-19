@@ -19,6 +19,7 @@ export class StatistiquesComponent implements OnInit {
   statistiques: Statistique[] = [];
   contributeurs$: Observable<Utilisateur[]> = new Observable<Utilisateur[]>();
 
+
   constructor(
     private contributeurService: ContributeurService,
     private fb: FormBuilder,
