@@ -12,7 +12,7 @@ import {NotificationService} from "../../../common/services/notification.service
 })
 export class ForgotPasswordComponent implements OnInit {
   formForgotPwd = this.fb.group({
-    email: [null, [Validators.required, Validators.email]]
+    email: [null, [Validators.required]]
   });
 
   constructor(
@@ -36,7 +36,7 @@ export class ForgotPasswordComponent implements OnInit {
     const result = this.userService.requestPasswordReset(email).subscribe(
       () => {
         result.unsubscribe();
-        const message = `Un nouveau mot de passe a été envoyé à l'adresse << ${email} >>. Veuillez consulter votre boite mail !`;
+        const message = `Un nouveau mot de passe a été envoyé a votre numéro de téléphone << ${email} >>. Veuillez consulter votre téléphone !`;
         this.notification.open('success', message);
         this.onGoBack();
       },
