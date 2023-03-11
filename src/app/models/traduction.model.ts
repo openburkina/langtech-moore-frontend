@@ -17,6 +17,7 @@ export class Traduction {
     public utilisateur?: Utilisateur,
     public sourceDonnee?: SourceDonnee,
     public langue?: Langue,
+    public createdDate?: Date,
   ) {
     this.utilisateur = new Utilisateur();
     this.sourceDonnee = new SourceDonnee();

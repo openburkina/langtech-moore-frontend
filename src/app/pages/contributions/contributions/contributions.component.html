@@ -105,6 +105,7 @@
         <thead class="table-light">
         <tr>
           <th>#</th>
+          <th>Date</th>
           <th>Source de données</th>
           <th>Type de traduction</th>
           <th>Etat</th>
@@ -116,6 +117,7 @@
         <tbody>
         <tr *ngFor="let t of traductions; index as i">
           <td>{{ i + 1 }}</td>
+          <td>{{ t.createdDate | date:'dd-MM-yyyy' }}</td>
           <td>{{ t.libelle }}</td>
           <td>{{ t.type }}</td>
           <td>

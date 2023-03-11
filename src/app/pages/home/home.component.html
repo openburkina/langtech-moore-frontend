@@ -6,39 +6,42 @@
   </div>
 </div>
 <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3">
-  <div class="col">
-    <div class="card radius-10 border-start border-0 border-3 border-info">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div>
-            <p class="mb-0 text-secondary">Total des contributeurs</p>
-            <h4 class="my-1 text-info">{{nbreContributor}}</h4>
-            <p class="mb-0 font-13"></p>
-          </div>
-          <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
-            <i class='bx bx-lock'></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col">
-    <div class="card radius-10 border-start border-0 border-3 border-success">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div>
-            <p class="mb-0 text-secondary">Total des données sources</p>
-            <h4 class="my-1 text-success">{{nbreSourceDonne}}</h4>
-            <p class="mb-0 font-13"></p>
-          </div>
-          <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
-            <i class='bx bx-lock-open'></i>
+  <a href="/pages/contributeurs">
+    <div class="col">
+      <div class="card radius-10 border-start border-0 border-3 border-info">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="mb-0 text-secondary">Total des contributeurs</p>
+              <h4 class="my-1 text-info">{{nbreContributor}}</h4>
+              <p class="mb-0 font-13"></p>
+            </div>
+            <div class="widgets-icons-2 rounded-circle bg-gradient-scooter text-white ms-auto">
+              <i class='bx bx-lock'></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </a>
+  <a href="/pages/source-donnees">
+    <div class="col">
+      <div class="card radius-10 border-start border-0 border-3 border-success">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div>
+              <p class="mb-0 text-secondary">Total des données sources</p>
+              <h4 class="my-1 text-success">{{nbreSourceDonne}}</h4>
+              <p class="mb-0 font-13"></p>
+            </div>
+            <div class="widgets-icons-2 rounded-circle bg-gradient-ohhappiness text-white ms-auto">
+              <i class='bx bx-lock-open'></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </a>
 
   <div class="col">
     <div class="card radius-10 border-start border-0 border-3 border-danger">
@@ -75,7 +78,8 @@
         <div class="row">
           <div class="col-md-3 mb-3">
             <label for="dateDebut" class="col-form-label">Date debut</label>
-            <input class="form-control" type="date" name="dateDebut" formControlName="dateDebut" id="dateDebut">
+            <input class="form-control" type="date" name="dateDebut" formControlName="dateDebut" id="dateDebut"
+            >
           </div>
 
           <div class="col-md-3 mb-3">

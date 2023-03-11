@@ -7,6 +7,8 @@ import {ContributeurService} from "../contributeurs/contributeur.service";
 import {DateDto} from "../../models/dateDto";
 import {SourceService} from "../source-donnees/source.service";
 import {Utilisateur} from "../../models/utilisateur.model";
+import {Router} from "@angular/router";
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -30,10 +32,12 @@ export class HomeComponent implements OnInit {
   nbreContributor = 0;
   bestContributeurs: Utilisateur[] = [];
   pointFidelite = 0
+  today = new Date();
   constructor(private fb: FormBuilder,
               private contributionService: ContributionService,
               private contributeurService: ContributeurService,
-              private sourceService: SourceService) { }
+              private sourceService: SourceService,
+              private router: Router) { }
 
   ngOnInit(): void {
     $.getScript("./assets/js/deafult-dashboard.js");
@@ -42,6 +46,8 @@ export class HomeComponent implements OnInit {
     this.getNbreSourceTranslated();
     this.getSatistique();
     this.initSearchForm();
+    this.formSearch.get('dateDebut').setValue(formatDate(new Date(),'yyyy-MM-dd','en'))
+    this.formSearch.get('dateFin').setValue(formatDate(new Date(),'yyyy-MM-dd','en'))
   }
 
   onResetSearchForm() {
@@ -57,6 +63,8 @@ export class HomeComponent implements OnInit {
       dateDebut: null,
       dateFin: null,
     });
+
+
   }
 
   getSatistique(){
@@ -161,4 +169,7 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  navigateToContributeur() {
+    this.router.navigate(['pages','contributeurs'])
+  }
 }
