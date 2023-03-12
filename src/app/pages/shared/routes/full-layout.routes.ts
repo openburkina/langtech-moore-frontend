@@ -10,30 +10,10 @@ export const Full_ROUTES: Routes = [
     canActivate: [UserRoutesAccessGuard],
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('../../dashboard/dashboard.module').then(m => m.DashboardModule),
-    canActivate: [UserRoutesAccessGuard],
-  },
-  {
-    path: 'components',
-    loadChildren: () => import('../../components/components.module').then(m => m.ComponentsModule),
-    canActivate: [UserRoutesAccessGuard],
-  },
-  {
-    path: 'icons',
-    loadChildren: () => import('../../icons/icons.module').then(m => m.IconsModule),
-    canActivate: [UserRoutesAccessGuard],
-  },
-  {
     path: 'user-profile',
     loadChildren: () => import('../../user-profile/user-profile.module').then(m => m.UserProfileModule),
     canActivate: [UserRoutesAccessGuard],
 
-  },
-  {
-    path: 'faq',
-    loadChildren: () => import('../../faq/faq.module').then(m => m.FaqModule),
-    canActivate: [UserRoutesAccessGuard],
   },
   {
     path: 'users',
