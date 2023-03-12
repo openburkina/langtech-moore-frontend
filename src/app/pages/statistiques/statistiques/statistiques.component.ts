@@ -36,8 +36,8 @@ export class StatistiquesComponent implements OnInit {
 
   initSearchForm() {
     this.formSearch = this.fb.group({
-      typeTraduction: [null, [Validators.required]],
-      contributeurId: [],
+      typeTraduction: [null],
+      contributeurId: [null],
       startDate: [null, [Validators.required]],
       endDate: [null, [Validators.required]],
     });

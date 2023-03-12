@@ -96,8 +96,9 @@ export class CreateUpdateUserComponent implements OnInit {
         result.unsubscribe();
       },
       error => {
+        console.log(error);
         result.unsubscribe();
-        const message = error.error.detail ? error.error.detail : `Une erreur est survenue lors de la création de l'utilisateur !`;
+        const message = error.error.title ? error.error.title : `Une erreur est survenue lors de la création de l'utilisateur !`;
         this.notification.open('danger', message);
       }
     );

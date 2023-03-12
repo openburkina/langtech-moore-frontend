@@ -29,7 +29,7 @@
             <select class="form-control" name="contributeurId" formControlName="contributeurId" id="contributeurId">
               <option [ngValue]="null" selected disabled>--Sélectionner le contributeur--</option>
               <option *ngFor="let c of contributeurs$ | async" [ngValue]="c.id">
-                {{ c.nom + ' ' + c.prenom + ' ' + c.email }}
+                {{ c.telephone + ' - ' + c.nom + ' ' + c.prenom  }}
               </option>
 
             </select>
@@ -44,13 +44,13 @@
           </div>
 
           <div class="col-12 col-md-3 mb-3">
-            <label for="startDate" class="col-form-label">Date de début</label>
+            <label for="startDate" class="col-form-label">Date de début <span class="text-danger">*</span> </label>
             <input class="form-control" type="date" name="startDate" formControlName="startDate"
                    id="startDate">
           </div>
 
           <div class="col-12 col-md-3 mb-3">
-            <label for="endDate" class="col-form-label">Date de fin</label>
+            <label for="endDate" class="col-form-label">Date de fin <span class="text-danger">*</span> </label>
             <input class="form-control" type="date" name="endDate" formControlName="endDate"
                    id="endDate">
           </div>
