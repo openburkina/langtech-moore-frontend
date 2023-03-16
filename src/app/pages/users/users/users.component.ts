@@ -147,7 +147,7 @@ export class UsersComponent implements OnInit {
   }
 
   onResetPassword(u: Utilisateur) {
-    const result = this.userService.requestPasswordReset(u.email).subscribe(
+    const result = this.userService.requestPasswordReset(u.login).subscribe(
       () => {
         result.unsubscribe();
         const message = `Le mot de passe a été réinitialisé avec succès !`;
